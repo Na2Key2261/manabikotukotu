@@ -1,0 +1,3 @@
+- Rails6
+- Bootstrap4.5
+- fontawesome

@@ -1,0 +1,10 @@
+<div class="profile-container w-75 d-flex mx-auto justify-content-around align-items-center border-bottom py-5">
+   <%= image_tag @user.get_profile_image(100,100), class:"rounded-circle";  %>
+  <h5 class="profile-name display-4"><%= @user.name %></h5>
+  <% if @user.id == current_user.id %>
+    <div class="mt-auto">
+    <p><%= link_to "プロフィール編集", edit_user_path(@user), class:"text-dark" %></p>
+    </div>
+  <% end %>
+</div>
+<%= render 'post_images/list', post_images: @post_images %>
