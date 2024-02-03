@@ -1,0 +1,29 @@
+<div class="wrapper flex">
+  <div class="sidebar">
+    <h3>サイドバー</h3>
+  </div>
+  <div class="content">
+    <h3>学習内容を投稿</h3>
+
+    <%= form_with(model: @post, url: public_user_posts_path(current_user), method: :post) do |form| %>
+      <div class="field">
+        <%= form.label :learning_item, '学習項目' %>
+        <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください' %>
+      </div>
+
+      <div class="field">
+        <%= form.label :learning_hours, '学習時間（時間）' %>
+        <%= form.number_field :learning_hours, step: 1, min: 1 %>
+      </div>
+
+      <div class="field">
+        <%= form.label :learning_content, '学習内容' %>
+        <%= form.text_area :learning_content %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit '投稿' %>
+      </div>
+    <% end %>
+  </div>
+</div>

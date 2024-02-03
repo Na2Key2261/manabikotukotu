@@ -30,12 +30,13 @@ Rails.application.routes.draw do
     resources :items, only: [:index, :show] do
       resources :cart_items, only: [:create, :update, :destroy]
     end
-    resources :cart_items, only: [:index]
     resources :orders, only: [:new, :index, :create, :show]
+    resources :posts, only: [:new, :create] # ここに追加
   end
   
   namespace :public do
     get 'registrations/new' => 'registrations#new', as: 'new_user_registration'
+    resources :users, only: [:show]
   end
 
 end
