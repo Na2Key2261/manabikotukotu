@@ -5,15 +5,15 @@
   <div class="content">
     <h3>学習内容を投稿</h3>
 
-    <%= form_with(model: @post, url: public_user_posts_path(current_user), method: :post) do |form| %>
+    <%= form_with(model: [@user, @post], url: public_user_posts_path(@user), method: :post) do |form| %>
       <div class="field">
         <%= form.label :learning_item, '学習項目' %>
         <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください' %>
       </div>
 
       <div class="field">
-        <%= form.label :learning_hours, '学習時間（時間）' %>
-        <%= form.number_field :learning_hours, step: 1, min: 1 %>
+        <%= form.label :learning_hour, '学習時間' %>
+        <%= form.number_field :learning_hour, min: 1, max: 24 %>
       </div>
 
       <div class="field">

@@ -17,26 +17,25 @@ Rails.application.routes.draw do
     registrations: 'public/registrations',
   }
 
+  # destroy_user_session という名前のルートを指定せずに、そのまま destroy アクションにマッチさせる
+  devise_scope :user do
+  delete 'users/sign_out', to: 'public/sessions#destroy', as: :logout_user_session
+end
+  
+  
+
   scope module: :public do
     root 'homes#top'
     get 'users/mypage' => 'users#show', as: 'mypage'
-    get 'users/information/edit' => 'users#edit', as: 'edit_information'
-    patch 'users/information' => 'users#update', as: 'update_information'
-    get 'users/unsubscribe' => 'users#unsubscribe', as: 'confirm_unsubscribe'
-    put 'users/information' => 'users#update'
-    patch 'users/withdraw' => 'users#withdraw', as: 'withdraw_user'
-
-    resources :addresses, only: [:index, :create, :edit, :update, :destroy]
-    resources :items, only: [:index, :show] do
-      resources :cart_items, only: [:create, :update, :destroy]
+    resources :users, only: [:show] do
+      resources :posts, only: [:new, :create, :edit, :update]  # ネスト
     end
-    resources :orders, only: [:new, :index, :create, :show]
-    resources :posts, only: [:new, :create] # ここに追加
   end
   
   namespace :public do
     get 'registrations/new' => 'registrations#new', as: 'new_user_registration'
-    resources :users, only: [:show]
+    resources :users, only: [:show] do
+      resources :posts, only: [:new, :create, :edit, :update]  # ネスト
+    end
   end
-
 end

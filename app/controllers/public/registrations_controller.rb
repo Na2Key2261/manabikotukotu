@@ -6,7 +6,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   def new
-    # ロジックが必要であれば追加
+    @user = User.new
   end
   # GET /resource/sign_up
   # def new
@@ -63,4 +63,21 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+  def create
+    super do |resource|
+      redirect_to mypage_path if resource.persisted?
+    end
+  end
+  
+  def destroy
+    super do |resource|
+      redirect_to root_path if resource
+    end
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password])
+  end
 end

@@ -1,12 +1,13 @@
 class Public::PostsController < ApplicationController
   def new
-    @post = Post.new
+    @post = current_user.posts.build
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.build(post_params)
+
     if @post.save
-      redirect_to root_path, notice: '学習情報が投稿されました。'
+      redirect_to public_user_path(current_user), notice: '投稿が成功しました。'
     else
       render :new
     end
