@@ -3,6 +3,7 @@ class Public::UsersController < ApplicationController
   def show
     @user = current_user
     @post = Post.new
+    @user_name = @user.name
     @posts = @user.posts
   end
 end

@@ -56,8 +56,10 @@ ActiveRecord::Schema.define(version: 2024_02_01_054116) do
     t.string "learning_item"
     t.integer "learning_hour"
     t.text "learning_content"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -76,4 +78,5 @@ ActiveRecord::Schema.define(version: 2024_02_01_054116) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "posts", "users"
 end

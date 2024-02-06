@@ -63,21 +63,14 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
-  def create
-    super do |resource|
-      redirect_to mypage_path if resource.persisted?
-    end
-  end
-  
-  def destroy
-    super do |resource|
-      redirect_to root_path if resource
-    end
-  end
-
-  protected
-
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :name])
+  end
+  def after_sign_up_path_for(resource)
+    mypage_path
+  end
+
+  def after_update_path_for(resource)
+    mypage_path
   end
 end

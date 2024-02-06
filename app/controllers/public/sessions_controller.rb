@@ -1,21 +1,9 @@
-# frozen_string_literal: true
-
 class Public::SessionsController < Devise::SessionsController
   before_action :configure_permitted_parameters
-  before_action :reject_customer, only: [:create]
-  before_action :authenticate_user!, only: [:destroy]
-
+  before_action :reject_inactive_user, only: [:create]
 
   def after_sign_in_path_for(resource)
-    root_path
-  end
-  
-  def destroy
-    super do |resource|
-      sign_out(resource)
-      redirect_to root_path
-      return
-    end
+    user_path(current_user) # ログイン後に表示するページを指定
   end
 
   protected
@@ -24,13 +12,18 @@ class Public::SessionsController < Devise::SessionsController
     devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password])
   end
 
-  
-  def after_sign_in_path_for(resource)
-    mypage_path
-  end
+  def reject_inactive_user
+    @user = User.find_by(email: params[:user][:email])
 
-  def after_sign_out_path_for(resource)
-    root_path
+    if @user
+      if @user.valid_password?(params[:user][:password]) && !@user.is_deleted
+        sign_in(@user)
+        flash[:notice] = "ログインしました"
+      else
+        flash[:notice] = "正しい情報を入力してください"
+      end
+    else
+      flash[:notice] = "会員情報が見つからないため、再度会員登録をお願いします"
+    end
   end
-  
 end

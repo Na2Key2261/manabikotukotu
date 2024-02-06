@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :admin, controllers: {
     sessions: 'admin/sessions',
   }
-  
+
 
 
   namespace :admin do
@@ -21,8 +21,8 @@ Rails.application.routes.draw do
   devise_scope :user do
   delete 'users/sign_out', to: 'public/sessions#destroy', as: :logout_user_session
 end
-  
-  
+
+
 
   scope module: :public do
     root 'homes#top'
@@ -31,7 +31,7 @@ end
       resources :posts, only: [:new, :create, :edit, :update]  # ネスト
     end
   end
-  
+
   namespace :public do
     get 'registrations/new' => 'registrations#new', as: 'new_user_registration'
     resources :users, only: [:show] do

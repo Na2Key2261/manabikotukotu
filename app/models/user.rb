@@ -6,4 +6,7 @@ class User < ApplicationRecord
          
   
   has_many :posts
+  def is_deleted
+    self[:is_deleted]
+  end
 end
