@@ -3,11 +3,11 @@
     <h3>サイドバー</h3>
   </div>
   <div class="content">
-    <h3> <%= @user_name %>さん</h3>
+    <h3><%= @user_name %>さん</h3>
     <h3>学習内容を投稿しよう！</h3>
 
     <%= form_with(model: [@user, @post], url: public_user_posts_path(@user), method: :post) do |form| %>
-      
+
       <div class="field">
         <%= form.label :learning_item, '学習項目' %>
         <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください' %>
@@ -28,7 +28,7 @@
       </div>
     <% end %>
     <% if @posts.any? %>
-      <h3>投稿一覧</h3>
+      <h3><%= @user_name %>さんの投稿</h3>
       <table class="table">
         <thead>
           <tr>
@@ -36,17 +36,32 @@
             <th>学習項目</th>
             <th>学習時間（時間）</th>
             <th>学習内容</th>
-            
+
           </tr>
         </thead>
         <tbody>
-          <% @posts.each do |post| %>
+          <% current_user.posts.each do |post| %>
             <tr>
-              <td><%= post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></td>
+              <td><%= post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M") %></td>
               <td><%= post.learning_item %></td>
               <td><%= post.learning_hour %> 時間</td>
               <td><%= post.learning_content %></td>
-              
+              <% if post.favorites.exists?(user_id: current_user.id) %>
+                <td>
+                  <%= link_to public_post_favorites_path(post), method: :delete do %>
+                    ♥<%= post.favorites.count %> 
+                  <% end %>
+                </td>
+              <% else %>
+                <td>
+                  <%= link_to public_post_favorites_path(post), method: :post do %>
+                    ♡<%= post.favorites.count %> 
+                  <% end %>
+                </td>
+              <% end %>
+
+              <td><%= link_to "#{post.post_comments.count} コメント", public_post_path(post.id) %></td>
+
             </tr>
           <% end %>
         </tbody>
@@ -54,5 +69,6 @@
     <% else %>
       <p>まだ投稿がありません。</p>
     <% end %>
+    <%= link_to "みんなーの投稿", public_posts_path %>
   </div>
 </div>

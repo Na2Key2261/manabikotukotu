@@ -1,8 +1,18 @@
 class Public::PostsController < ApplicationController
   def new
     @post = current_user.posts.build
+    
   end
 
+  def index
+    @posts = Post.all.order(created_at: :desc)
+  end
+  
+  def show
+    @post = Post.find(params[:id])
+    @post_comment = PostComment.new
+  end
+  
   def create
     @post = current_user.posts.build(post_params)
 
@@ -12,6 +22,11 @@ class Public::PostsController < ApplicationController
       render :new
     end
   end
+  
+  def destroy
+    PostComment.find(params[:id]).destroy
+    redirect_to public_post_path(params[:post_id])
+  end 
 
   private
 

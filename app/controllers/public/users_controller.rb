@@ -5,5 +5,7 @@ class Public::UsersController < ApplicationController
     @post = Post.new
     @user_name = @user.name
     @posts = @user.posts
+    @posts = Post.all.order(created_at: :desc)
+    
   end
 end

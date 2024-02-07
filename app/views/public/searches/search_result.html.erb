@@ -1,0 +1,24 @@
+<table class="table table-hover table-inverse">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>opinion</th>
+
+      </tr>
+    <tbody>
+    <h2>Posts search for "<%= @word %>"</h2>
+    <% @posts.each do |book| %>
+      <tr>
+        <td>
+          <%= link_to user_path(post.user) do %>
+            <%= image_tag book.user.get_profile_image(50, 50) %>
+          <% end %>
+        </td>
+        <td><%= link_to book.title , book_path(book.id) %></td>
+        <td><%= book.body %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>

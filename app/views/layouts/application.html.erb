@@ -19,7 +19,8 @@
             <li><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %></li>
           <% elsif user_signed_in? %>
             <li><%= link_to 'マイページ', mypage_path %></li>
-            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <li><%= link_to "みんなの投稿", public_posts_path %></li>
+            <li><%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' } %></li>
 
           <% else %>
             <li><%= link_to '新規登録', new_user_registration_path %></li>
@@ -31,6 +32,7 @@
         
         
       </div>
+      
     </header>
     <%= yield %>
   </body>
