@@ -1,0 +1,37 @@
+<div class="wrapper flex">
+  <div class="sidebar">
+    <h3>サイドバー</h3>
+  </div>
+  <div class="content">
+    <h3>あなたがいいねした投稿一覧</h3>
+
+    <% if @favorite_posts.any? %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>日付</th>
+            <th>ユーザー名</th>
+            <th>学習項目</th>
+            <th>学習時間</th>
+            <th>学習内容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @favorite_posts.each do |post| %>
+            <tr>
+              <td><%= post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d") %></td>
+              <td><%= post.user.name %></td>
+              <td><%= post.learning_item %></td>
+              <td><%= post.learning_hour %> 時間</td>
+              <td><%= post.learning_content %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>いいねした投稿がありません。</p>
+    <% end %>
+
+    <%= link_to "戻る", mypage_path, class: "btn btn-primary" %>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<h2>ユーザー編集</h2>
+
+<%= form_with(model: @user, url: admin_user_path(@user), method: :patch) do |form| %>
+  <div class="field">
+    <%= form.label :name, '名前' %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email, 'メールアドレス' %>
+    <%= form.email_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :is_active, '会員ステータス' %>
+    <%= form.select :is_active, options_for_select([['有効', true], ['停止', false]], @user.is_active) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit '更新', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+
+
+<%= link_to '戻る', admin_users_path, class: 'btn btn-secondary' %>

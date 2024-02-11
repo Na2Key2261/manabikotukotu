@@ -1,3 +1,4 @@
+
 class Public::PostsController < ApplicationController
   def new
     @post = current_user.posts.build
@@ -23,10 +24,29 @@ class Public::PostsController < ApplicationController
     end
   end
   
+  def edit
+  @post = Post.find(params[:id])
+  end
+  
+   def update
+    @post = Post.find(params[:id])
+    if @post.update(post_params)
+      redirect_to public_user_path(current_user), notice: '投稿が更新されました。'
+    else
+      render :edit
+    end
+  end
+  
   def destroy
-    PostComment.find(params[:id]).destroy
-    redirect_to public_post_path(params[:post_id])
-  end 
+    
+    @post = Post.find(params[:id])
+    if @post.destroy
+      flash[:notice] = "投稿が削除されました。"
+    else
+      flash[:alert] = "投稿の削除に失敗しました。"
+    end
+    redirect_to public_user_path(current_user)
+  end
 
   private
 

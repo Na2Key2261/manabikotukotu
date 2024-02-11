@@ -26,20 +26,17 @@
               <td><%= post.learning_hour %> 時間</td>
               <td><%= post.learning_content %></td>
               <td>
-                <% if post.favorites.exists?(user_id: current_user.id) %>
-  <td>
-    <%= link_to public_post_favorites_path(post), method: :delete do %>
-      ♥<%= post.favorites.count %> 
-    <% end %>
-  </td>
+                <% if post.favorited_by?(current_user) %>
+  <%= link_to public_post_favorites_url(post, post.favorites.find_by(user_id: current_user.id)), method: :delete do %>
+    ♥<%= post.favorites.count %> 
+  <% end %>
 <% else %>
-  <td>
-    <%= link_to public_post_favorites_path(post), method: :post do %>
-      ♡<%= post.favorites.count %> 
-    <% end %>
-  </td>
+  <%= link_to public_post_favorites_path(post), method: :post do %>
+    ♡<%= post.favorites.count %> 
+  <% end %>
 <% end %>
               </td>
+              <td><%= link_to "#{post.post_comments.count} コメント", public_post_path(post.id) %></td>
             </tr>
           <% end %>
         </tbody>

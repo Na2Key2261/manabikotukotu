@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'top' => 'homes#top', as: 'top'
     get 'search' => 'homes#search', as: 'search'
+    get 'top' => 'homes#top', as: 'admin_top'
     resources :users, only: [:index, :show, :edit, :update]
     resources :posts, except: [:destroy]
   end
@@ -13,28 +14,29 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'public/sessions',
     registrations: 'public/registrations',
+    passwords: 'public/passwords' # Add passwords controller
   }
 
-  # destroy_user_session という名前のルートを指定せずに、そのまま destroy アクションにマッチさせる
-  devise_scope :user do
-  delete 'users/sign_out', to: 'public/sessions#destroy', as: :logout_user_session
-end
+  # devise_scope :user do
+  #   delete 'users/sign_out', to: 'public/sessions#destroy', as: :logout_user_session
+  # end
 
   scope module: :public do
     root 'homes#top'
     get 'users/mypage' => 'users#show', as: 'mypage'
-    
   end
 
   namespace :public do
     get 'registrations/new' => 'registrations#new', as: 'new_user_registration'
-    get "search" => "searches#search"
-    resources :users, only: [:show] do
-      resources :posts, only: [:new, :create, :edit, :update]  # ネスト
+    get '/search', to: 'searches#search', as: 'search'
+    resources :users, only: [:show, :edit, :update] do
+      resources :posts, only: [:new, :create, :edit, :update] # ネスト
     end
-    resources :posts, only: [:new, :create, :index, :show, :destroy] do
-    resource :favorites, only: [:create, :destroy] 
-    resources :post_comments, only: [:create, :destroy] 
-    end
+    resources :posts, only: [:new, :create, :edit, :update, :index, :show, :destroy] do
+      resource :favorites, only: [:create, :destroy]
+
+      resources :post_comments, only: [:create, :destroy]
+  end
+  get 'favorites/index', to: 'favorites#index'
   end
 end

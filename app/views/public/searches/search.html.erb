@@ -1,0 +1,27 @@
+<h1>検索結果</h1>
+
+<% if @method == 'post' %>
+  <% if @posts.present? %>
+    <h2>投稿の検索結果</h2>
+    <% @posts.each do |post| %>
+      <div>
+        <p>ユーザー名: <%= post.user.name %></p>
+        <p>投稿: <%= post.content %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <p>投稿の検索結果はありません。</p>
+  <% end %>
+<% elsif @method == 'learning_item' %>
+  <% if @users.present? %>
+    <h2>学習項目の検索結果</h2>
+    <% @users.each do |user| %>
+      <div>
+        <p>ユーザー名: <%= user.name %></p>
+        <p>学習項目: <%= user.posts.map(&:learning_item).join(', ') %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <p>学習項目の検索結果はありません。</p>
+  <% end %>
+<% end %>

@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 2024_02_07_022509) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string "learning_item"
+    t.integer "learning_item"
     t.integer "learning_hour"
     t.text "learning_content"
     t.integer "user_id"
