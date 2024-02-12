@@ -1,48 +1,63 @@
-<div class="wrapper flex">
-  <div class="sidebar">
-    <h3>サイドバー</h3>
-  </div>
-  <div class="content">
-    <h3>すべてのユーザーの投稿一覧</h3>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 border-right">
+      <%= render "public/users/sidebar" %>
+    </div>
+    <div class="col-md-9">
+      <div class="content">
+        <h3>すべてのユーザーの投稿一覧</h3>
 
-    <% if @posts.any? %>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>投稿日時</th>
-            <th>投稿者</th>
-            <th>学習項目</th>
-            <th>学習時間（時間）</th>
-            <th>学習内容</th>
-            <th>お気に入り</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @posts.each do |post| %>
-            <tr>
-              <td><%= post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M") %></td>
-              <td><%= post.user.name %></td>
-              <td><%= post.learning_item %></td>
-              <td><%= post.learning_hour %> 時間</td>
-              <td><%= post.learning_content %></td>
-              <td>
-                <% if post.favorited_by?(current_user) %>
-  <%= link_to public_post_favorites_url(post, post.favorites.find_by(user_id: current_user.id)), method: :delete do %>
-    ♥<%= post.favorites.count %> 
-  <% end %>
-<% else %>
-  <%= link_to public_post_favorites_path(post), method: :post do %>
-    ♡<%= post.favorites.count %> 
-  <% end %>
-<% end %>
-              </td>
-              <td><%= link_to "#{post.post_comments.count} コメント", public_post_path(post.id) %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <p>まだ投稿がありません。</p>
-    <% end %>
+        <% if @posts.any? %>
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>投稿日時</th>
+                <th>投稿者</th>
+                <th>学習項目</th>
+                <th>学習時間（時間）</th>
+                <th>学習内容</th>
+                <th>お気に入り</th>
+                <th>コメント数</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @posts.each do |post| %>
+                <tr>
+                  <td>
+      <% if post.user.image.attached? %>
+        <%= image_tag post.user.image, size: "100x100" %>
+      <% else %>
+        <%= image_tag 'no_image', size: "100x100" %>
+      <% end %><br>
+    </td>
+                  <td><%= post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M") %></td>
+                  <td><%= post.user.name %></td>
+                  <td><%= post.learning_item %></td>
+                  <td><%= post.learning_hour %> 時間</td>
+                  <td><%= post.learning_content %></td>
+                  <td>
+                    <% if post.favorited_by?(current_user) %>
+                      <%= link_to public_post_favorites_url(post, post.favorites.find_by(user_id: current_user.id)), method: :delete do %>
+                        ♥<%= post.favorites.count %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to public_post_favorites_path(post), method: :post do %>
+                        ♡<%= post.favorites.count %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td><%= link_to "#{post.post_comments.count} コメント", public_post_path(post.id) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p>まだ投稿がありません。</p>
+        <% end %>
+      </div>
+
+      <%= link_to "マイページへ戻る", mypage_path, class: "btn btn-secondary" %>
+    </div>
   </div>
 </div>

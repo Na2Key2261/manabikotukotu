@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     get 'search' => 'homes#search', as: 'search'
     get 'top' => 'homes#top', as: 'admin_top'
     resources :users, only: [:index, :show, :edit, :update]
-    resources :posts, except: [:destroy]
+    resources :posts, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   end
 
   devise_for :users, controllers: {
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   namespace :public do
     get 'registrations/new' => 'registrations#new', as: 'new_user_registration'
     get '/search', to: 'searches#search', as: 'search'
-    resources :users, only: [:show, :edit, :update] do
+    resources :users, only: [:show, :edit, :update, :index] do
       resources :posts, only: [:new, :create, :edit, :update] # ネスト
     end
     resources :posts, only: [:new, :create, :edit, :update, :index, :show, :destroy] do

@@ -1,4 +1,5 @@
 class Post < ApplicationRecord
+  has_one_attached :image
   belongs_to :user
   has_many :favorites, dependent: :destroy
   has_many :post_comments, dependent: :destroy
@@ -20,13 +21,13 @@ class Post < ApplicationRecord
 
   def self.search_for(content, method)
     if method == 'perfect'
-      Post.where(title: content)
+      Post.where(learning_content: content)
     elsif method == 'forward'
-      Post.where('name LIKE ?', content + '%')
+      Post.where('learning_content LIKE ?', content + '%')
     elsif method == 'backward'
-      Post.where('name LIKE ?', '%' + content)
+      Post.where('learning_content LIKE ?', '%' + content)
     else
-      Post.where('name LIKE ?', '%' + content + '%')
+      Post.where('learning_content LIKE ?', '%' + content + '%')
     end
   end
 end

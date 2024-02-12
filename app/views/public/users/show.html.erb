@@ -1,14 +1,9 @@
 <div class="container">
   <div class="row">
-    <div class="col-md3">
-    <div class="sidebar">
-    <h3>サイドバー</h3>
-    <h3><%= @user_name %>さん</h3>
-    <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn btn-secondary" %>
-    <%= link_to "あなたの♥", public_favorites_index_path %>
-  </div>
-  </div>
-  <div class="col-md9">
+    <div class="col-md3 border-right">
+      <%= render "public/users/sidebar" %>
+    </div>
+  <div class="col-md-9">
     <div class="content">
     <h3>学習内容を投稿しよう！</h3>
 
@@ -52,7 +47,6 @@
               <td><%= post.learning_item %></td>
               <td><%= post.learning_hour %> 時間</td>
               <td><%= post.learning_content %></td>
-              <td><%= link_to '編集', edit_public_post_path(post) %></td>
               <% if post.favorites.exists?(user_id: current_user.id) %>
                 <td>
                     ♥<%= post.favorites.count %>
@@ -64,7 +58,7 @@
               <% end %>
 
               <td><%= link_to "#{post.post_comments.count} コメント", public_post_path(post.id) %></td>
-
+              <td><%= link_to '編集', edit_public_post_path(post), class: "btn btn-primary" %></td>
             </tr>
           <% end %>
         </tbody>

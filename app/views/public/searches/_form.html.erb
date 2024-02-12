@@ -1,7 +1,41 @@
 <% if user_signed_in? %>
-  <%= form_with url: public_search_path, method: :get, local: true do |f| %>
-    <%= f.text_field :content %>
-    <%= f.select :method, options_for_select({"投稿" => "post", "学習項目" => "learning_item"}) %>
-    <%= f.submit "検索" %>
+  <%= form_with(url: public_search_path, method: :get, local: true) do |f| %>
+    <div class="field">
+      <%= f.label :search_type, '検索' %>
+      <%= f.select :search_type, options_for_select({ "学習項目" => "learning_item", "学習内容" => "learning_content" }), prompt: '選択してください' %>
+    </div>
+    <div id="learning_item_search" class="field" style="display: none;">
+      <%= f.label :learning_item, '学習項目で検索' %><br>
+      <%= f.select :learning_item, Post.learning_items.keys.unshift('すべて'), prompt: 'すべて' %>
+    </div>
+    <div id="learning_content_search" class="field" style="display: none;">
+      <%= f.label :learning_content, '学習内容で検索' %><br>
+      <%= f.text_field :learning_content %>
+    </div>
+    <div class="actions">
+      <%= f.submit "検索" %>
+    </div>
   <% end %>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var searchTypeSelect = document.querySelector("#search_type");
+      var learningItemSearch = document.querySelector("#learning_item_search");
+      var learningContentSearch = document.querySelector("#learning_content_search");
+
+      searchTypeSelect.addEventListener("change", function() {
+        if (this.value === "learning_item") {
+          learningItemSearch.style.display = "block";
+          learningContentSearch.style.display = "none";
+        } else if (this.value === "learning_content") {
+          learningItemSearch.style.display = "none";
+          learningContentSearch.style.display = "block";
+        } else {
+          learningItemSearch.style.display = "none";
+          learningContentSearch.style.display = "none";
+        }
+      });
+    });
+  </script>
 <% end %>
+
