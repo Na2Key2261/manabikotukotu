@@ -5,6 +5,7 @@ class Public::UsersController < ApplicationController
   @post = Post.new
   @user_name = @user.name
   @posts = @user.posts.order(created_at: :desc) # ユーザーの投稿のみを取得し、降順で表示する
+  @posts = @user.posts.page(params[:page])
   end
 
   def edit

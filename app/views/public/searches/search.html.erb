@@ -1,18 +1,5 @@
-<h1>検索結果</h1>
-
-<% if @method == 'post' %>
-  <% if @posts.present? %>
-    <h2>投稿の検索結果</h2>
-    <% @posts.each do |post| %>
-      <div>
-        <p>ユーザー名: <%= post.user.name %></p>
-        <p>投稿: <%= post.content %></p>
-      </div>
-    <% end %>
-  <% else %>
-    <p>投稿の検索結果はありません。</p>
-  <% end %>
-<% elsif @method == 'learning_item' %>
+<%= @method %>
+<% if @method == 'learning_item' %>
   <% if @users.present? %>
     <h2>学習項目の検索結果</h2>
     <% @users.each do |user| %>
@@ -24,5 +11,18 @@
   <% else %>
     <p>学習項目の検索結果はありません。</p>
   <% end %>
+<% elsif @method == 'learning_content' %>
+  <% if @posts.present? %>
+    <h2>学習内容の検索結果</h2>
+    <% @posts.each do |post| %>
+      <div>
+        <p>ユーザー名: <%= post.user.name %></p>
+        <p>投稿: <%= post.content %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <p>学習内容の検索結果はありません。</p>
+  <% end %>
 <% end %>
+
 <%= link_to "戻る", mypage_path, class: "btn btn-primary" %>

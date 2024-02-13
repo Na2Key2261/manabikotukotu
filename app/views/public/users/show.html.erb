@@ -49,15 +49,15 @@
               <td><%= post.learning_content %></td>
               <% if post.favorites.exists?(user_id: current_user.id) %>
                 <td>
-                    ♥<%= post.favorites.count %>
+                    <i class="fa-regular fa-thumbs-up"></i><%= post.favorites.count %>
                 </td>
               <% else %>
                 <td>
-                    ♡<%= post.favorites.count %>
+                    <i class="fa-solid fa-thumbs-up"></i><%= post.favorites.count %>
                 </td>
               <% end %>
 
-              <td><%= link_to "#{post.post_comments.count} コメント", public_post_path(post.id) %></td>
+              <td><%= link_to "#{post.post_comments.count} ", public_post_path(post.id), class: "fa-regular fa-comment-dots" %></td>
               <td><%= link_to '編集', edit_public_post_path(post), class: "btn btn-primary" %></td>
             </tr>
           <% end %>
@@ -66,6 +66,7 @@
     <% else %>
       <p>まだ投稿がありません。</p>
     <% end %>
+    <%= paginate @posts %>
     <%= link_to "みんなの投稿", public_posts_path %>
   </div>
   </div>
