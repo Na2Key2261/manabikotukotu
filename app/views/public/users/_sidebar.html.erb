@@ -1,0 +1,16 @@
+<div class="sidebar">
+  <h3>サイドバー</h3>
+  <% if @user.present? %>
+    <h5><%= @user.name %>さん</h5>
+    <% if @user.image.attached? %>
+      <%= image_tag @user.image, size: "100x100" %>
+    <% else %>
+      <%= image_tag 'no_image', size: "100x100" %>
+    <% end %><br>
+  <% else %>
+    <h5>ゲストユーザー</h5>
+  <% end %>
+  <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn btn-secondary" %><br>
+  <%= link_to "あなたの♥", public_favorites_index_path %>
+  <%= render "public/searches/form" %>
+</div>
