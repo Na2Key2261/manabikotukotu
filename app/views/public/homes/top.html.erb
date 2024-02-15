@@ -1,6 +1,6 @@
 <section class="wrapper flex">
   <div class="sidebar">
-    <h3>ジャンル一覧</h3>
+    <h3>タイトル</h3>
   </div>
   <div class="content">
     <div class="mv">
@@ -11,6 +11,8 @@
         <%= link_to '新規登録', new_user_registration_path %>
       </p>
     </div>
-    <h2 class="section-ttl">オススメ</h2>
+    <div class="row">
+          <%= link_to "ゲストログイン（閲覧用）", users_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
+        </div>
   </div>
 </section>

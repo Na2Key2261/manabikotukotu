@@ -28,46 +28,48 @@
           </div>
           <div class="col-md-7">
             <p>学習時間の合計: <%= @total_learning_hours %> 時間</p>
-            <div id="weekly-learning-chart" style="width: 100%; height: 400px;"></div>
+            <div id="weekly-learning-chart"></div>
           </div>
 
     <% if @posts.any? %>
       <h3><%= @user_name %>さんの投稿</h3>
       
       <table class="table">
-        <thead>
-          <tr>
-            <th>投稿日時</th>
-            <th>学習項目</th>
-            <th>学習時間（時間）</th>
-            <th>学習内容</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <% current_user.posts.each do |post| %>
-            <tr>
-              <td><%= post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M") %></td>
-              <td><%= post.learning_item %></td>
-              <td><%= post.learning_hour %> 時間</td>
-              <td><%= post.learning_content %></td>
-              <td>
-                <% if post.favorited_by?(current_user) %>
-                  <%= link_to public_post_favorites_url(post, post.favorites.find_by(user_id: current_user.id)), method: :delete do %>
-                    <i class="fa-regular fa-thumbs-up"></i><%= post.favorites.count %>
-                  <% end %>
-                <% else %>
-                  <%= link_to public_post_favorites_path(post), method: :post do %>
-                    <i class="fa-solid fa-thumbs-up"></i><%= post.favorites.count %>
-                  <% end %>
-                <% end %>
-              </td>
-              <td><%= link_to "#{post.post_comments.count} ", public_post_path(post.id), class: "fa-regular fa-comment-dots" %></td>
-              <td><%= link_to '編集', edit_public_post_path(post), class: "btn btn-primary" %></td>
-            </tr>
+  <thead>
+    <tr>
+      <th>投稿日時</th>
+      <th>学習項目</th>
+      <th>学習時間（時間）</th>
+      <th>学習内容</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% current_user.posts.order(created_at: :desc).each do |post| %>
+      <tr>
+        <td><%= post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M") %></td>
+        <td><%= post.learning_item %></td>
+        <td><%= post.learning_hour %> 時間</td>
+        <td><%= post.learning_content %></td>
+        <td>
+          <% if post.favorited_by?(current_user) %>
+            <%= link_to public_post_favorites_url(post, post.favorites.find_by(user_id: current_user.id)), method: :delete do %>
+              <i class="fa-regular fa-thumbs-up"></i><%= post.favorites.count %>
+            <% end %>
+          <% else %>
+            <%= link_to public_post_favorites_path(post), method: :post do %>
+              <i class="fa-solid fa-thumbs-up"></i><%= post.favorites.count %>
+            <% end %>
           <% end %>
-        </tbody>
-      </table>
+        </td>
+        <td><%= link_to "#{post.post_comments.count} ", public_post_path(post.id), class: "fa-regular fa-comment-dots" %></td>
+        <td><%= link_to '編集', edit_public_post_path(post), class: "btn btn-primary" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
     <% else %>
       <p>まだ投稿がありません。</p>
     <% end %>
@@ -79,7 +81,7 @@
   <h4>学習項目別の学習時間の合計</h4>
   <ul>
     <% @learning_items_total.each do |learning_item, total_hours| %>
-      <li><%= learning_item %>: <%= total_hours %> 時間</li>
+      <div><i class="fa-solid fa-book-open"></i><%= learning_item %>: <%= total_hours %> 時間</div>
     <% end %>
   </ul>
 <% end %>

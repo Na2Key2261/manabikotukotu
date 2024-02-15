@@ -33,5 +33,11 @@ class Public::SessionsController < Devise::SessionsController
     # ユーザーが見つからない場合の処理
     flash[:notice] = "会員情報が見つからないため、再度会員登録をお願いします"
   end
-end
+  end
+  
+  def guest_sign_in
+    user = User.guest
+    sign_in user
+    redirect_to user_path(user), notice: "guestuserでログインしました。"
+  end
 end

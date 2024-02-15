@@ -1,5 +1,6 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :ensure_guest_user, only: [:edit]
   def show
   @user = current_user
   @post = Post.new
@@ -51,4 +52,6 @@ end
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :image)
   end
+  
+  
 end
