@@ -3,33 +3,37 @@
     <div class="col-md3 border-right">
       <%= render "public/users/sidebar" %>
     </div>
-  <div class="col-md-9">
-    <div class="content">
-    <h3>学習内容を投稿しよう！</h3>
+<div class="col-md-9">
+      <div class="content">
+        <div class="row">
+          <div class="col-md-5">
+            <h3>学習内容を投稿しよう！</h3>
+            <%= form_with(model: [@user, @post], url: public_user_posts_path(@user), method: :post) do |form| %>
+              <div class="field">
+                <%= form.label :learning_item, '学習項目' %>
+                <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください' %>
+              </div>
+              <div class="field">
+                <%= form.label :learning_hour, '学習時間' %>
+                <%= form.number_field :learning_hour, min: 1, max: 24 %>
+              </div>
+              <div class="field">
+                <%= form.label :learning_content, '学習内容' %>
+                <%= form.text_area :learning_content %>
+              </div>
+              <div class="actions">
+                <%= form.submit '投稿' %>
+              </div>
+            <% end %>
+          </div>
+          <div class="col-md-7">
+            <p>学習時間の合計: <%= @total_learning_hours %> 時間</p>
+            <div id="weekly-learning-chart" style="width: 100%; height: 400px;"></div>
+          </div>
 
-    <%= form_with(model: [@user, @post], url: public_user_posts_path(@user), method: :post) do |form| %>
-
-      <div class="field">
-        <%= form.label :learning_item, '学習項目' %>
-        <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください' %>
-      </div>
-
-      <div class="field">
-        <%= form.label :learning_hour, '学習時間' %>
-        <%= form.number_field :learning_hour, min: 1, max: 24 %>
-      </div>
-
-      <div class="field">
-        <%= form.label :learning_content, '学習内容' %>
-        <%= form.text_area :learning_content %>
-      </div>
-
-      <div class="actions">
-        <%= form.submit '投稿' %>
-      </div>
-    <% end %>
     <% if @posts.any? %>
       <h3><%= @user_name %>さんの投稿</h3>
+      
       <table class="table">
         <thead>
           <tr>
@@ -47,16 +51,17 @@
               <td><%= post.learning_item %></td>
               <td><%= post.learning_hour %> 時間</td>
               <td><%= post.learning_content %></td>
-              <% if post.favorites.exists?(user_id: current_user.id) %>
-                <td>
+              <td>
+                <% if post.favorited_by?(current_user) %>
+                  <%= link_to public_post_favorites_url(post, post.favorites.find_by(user_id: current_user.id)), method: :delete do %>
                     <i class="fa-regular fa-thumbs-up"></i><%= post.favorites.count %>
-                </td>
-              <% else %>
-                <td>
+                  <% end %>
+                <% else %>
+                  <%= link_to public_post_favorites_path(post), method: :post do %>
                     <i class="fa-solid fa-thumbs-up"></i><%= post.favorites.count %>
-                </td>
-              <% end %>
-
+                  <% end %>
+                <% end %>
+              </td>
               <td><%= link_to "#{post.post_comments.count} ", public_post_path(post.id), class: "fa-regular fa-comment-dots" %></td>
               <td><%= link_to '編集', edit_public_post_path(post), class: "btn btn-primary" %></td>
             </tr>
@@ -68,7 +73,83 @@
     <% end %>
     <%= paginate @posts %>
     <%= link_to "みんなの投稿", public_posts_path %>
+    <h3>学習時間の合計: <%= @total_learning_hours %> 時間</h3>
+
+<% if @learning_items_total.present? %>
+  <h4>学習項目別の学習時間の合計</h4>
+  <ul>
+    <% @learning_items_total.each do |learning_item, total_hours| %>
+      <li><%= learning_item %>: <%= total_hours %> 時間</li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if @learning_items_total.present? %>
+  <h4>学習項目別の学習時間の合計</h4>
+  <div id="chart_div" style="width: 100%; height: 300px;"></div>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable(<%= @chart_data.to_json.html_safe %>);
+
+      var options = {
+        title: '学習項目別の学習時間の合計',
+        legend: { position: 'none' },
+      };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
+  </script>
+<% end %>
+
   </div>
   </div>
   </div>
 </div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawCharts);
+
+  function drawCharts() {
+    // 過去一週間の学習時間のグラフ
+    var weeklyData = new google.visualization.DataTable();
+    weeklyData.addColumn('string', '日付');
+    weeklyData.addColumn('number', '学習時間');
+    weeklyData.addRows([
+      <% @weekly_learning_hours.each do |data| %>
+        ['<%= data[:date] %>', <%= data[:hours] %>],
+      <% end %>
+    ]);
+
+    var weeklyOptions = {
+      title: '過去一週間の学習時間',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+
+    var weeklyChart = new google.visualization.LineChart(document.getElementById('weekly-learning-chart'));
+    weeklyChart.draw(weeklyData, weeklyOptions);
+
+    // 学習項目別の学習時間の合計のグラフ
+    <% if @chart_data.present? %>
+      var chartData = google.visualization.arrayToDataTable(<%= @chart_data.to_json.html_safe %>);
+
+      var options = {
+        title: '学習項目別の学習時間の合計',
+        legend: { position: 'none' },
+      };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+      chart.draw(chartData, options);
+    <% end %>
+  }
+</script>
+
