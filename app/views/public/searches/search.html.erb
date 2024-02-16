@@ -5,7 +5,7 @@
     <% @users.each do |user| %>
       <div>
         <p>ユーザー名: <%= user.name %></p>
-        <p>学習項目: <%= user.posts.map(&:learning_item).join(', ') %></p>
+        <p>学習科目: <%= user.posts.map(&:learning_item).join(', ') %></p>
       </div>
     <% end %>
   <% else %>

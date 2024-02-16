@@ -1,5 +1,6 @@
 
 class Public::PostsController < ApplicationController
+  before_action :check_guest, only: [:create, :update, :destroy]
   def new
     @post = current_user.posts.build
 
@@ -54,6 +55,10 @@ class Public::PostsController < ApplicationController
       flash[:alert] = "投稿の削除に失敗しました。"
     end
     redirect_to public_user_path(current_user)
+  end
+  
+  def check_guest
+    redirect_to root_path, alert: 'ゲストユーザーはこの操作を行えません。' if current_user.guest?
   end
 
   private
