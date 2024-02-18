@@ -1,6 +1,6 @@
 
 class Public::PostsController < ApplicationController
-  before_action :check_guest, only: [:create, :update, :destroy]
+  before_action :check_guest_user, only: [:new, :create, :edit, :update, :destroy]
   def new
     @post = current_user.posts.build
 
@@ -8,7 +8,7 @@ class Public::PostsController < ApplicationController
 
   def index
     @user = current_user
-    @posts = Post.all.order(created_at: :desc).page(params[:page])
+    @posts = Post.order(created_at: :desc).page(params[:page])
     @total_learning_hours = @posts.sum(:learning_hour)
 
   @learning_hours_by_item = @posts.group(:learning_item).sum(:learning_hour)
@@ -57,9 +57,11 @@ class Public::PostsController < ApplicationController
     redirect_to public_user_path(current_user)
   end
   
-  def check_guest
-    redirect_to root_path, alert: 'ゲストユーザーはこの操作を行えません。' if current_user.guest?
+  def check_guest_user
+  if current_user.email == "guest@example.com"
+    redirect_to root_path, alert: "ゲストユーザーはこの操作を行うことができません。"
   end
+end
 
   private
 

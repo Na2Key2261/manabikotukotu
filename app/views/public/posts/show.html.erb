@@ -12,32 +12,25 @@
       </div>
       <div class="content">
         <p>コメント件数：<%= @post.post_comments.count %></p>
-        <table class="table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>ユーザー名</th>
-              <th>投稿日時</th>
-              <th>コメント内容</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @post.post_comments.each do |post_comment| %>
-              <tr>
-                <td><%= image_tag post_comment.user.image.variant(resize: "50x50"), class: "rounded-circle" if post_comment.user.image.attached? %></td>
-                <td><%= post_comment.user.name %></td>
-                <td><%= post_comment.created_at.strftime('%Y/%m/%d') %></td>
-                <td><%= post_comment.comment %></td>
-                <td>
+        <% @post.post_comments.each do |post_comment| %>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-2">
+                  <%= image_tag post_comment.user.image.variant(resize: "50x50"), class: "rounded-circle" if post_comment.user.image.attached? %>
+                </div>
+                <div class="col-md-10">
+                  <h5 class="card-title"><%= post_comment.user.name %></h5>
+                  <p class="card-text">投稿日時: <%= post_comment.created_at.strftime('%Y/%m/%d') %></p>
+                  <p class="card-text">コメント内容: <%= post_comment.comment %></p>
                   <% if current_user == post_comment.user %>
-                    <%= link_to "削除", public_post_post_comment_path(@post, post_comment), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+                    <%= link_to "削除", public_post_post_comment_path(@post, post_comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-sm" %>
                   <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
       <%= link_to "戻る", public_user_path, class: "btn btn-secondary" %>
     </div>

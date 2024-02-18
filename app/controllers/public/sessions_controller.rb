@@ -35,5 +35,10 @@ class Public::SessionsController < Devise::SessionsController
   end
   end
   
+  def guest_sign_in
+    user = User.find_by(email: "guest@example.com")
+    sign_in(user)
+    redirect_to mypage_path
+  end
   
 end

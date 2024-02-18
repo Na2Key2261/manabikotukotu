@@ -2,15 +2,15 @@
   <%= form_with(url: public_search_path, method: :get, local: true) do |f| %>
     <div class="field">
       <%= f.label :search_type, '検索' %>
-      <%= f.select :search_type, options_for_select({ "学習項目" => "learning_item", "学習内容" => "learning_content" }), prompt: '選択してください' %>
+      <%= f.select :search_type, options_for_select({ "学習項目" => "learning_item", "学習内容" => "learning_content" }), prompt: '選択してください', id: 'search_type' %>
     </div>
     <div id="learning_item_search" class="field" style="display: none;">
       <%= f.label :learning_item, '学習項目で検索' %><br>
-      <%= f.select :learning_item, Post.learning_items.keys.unshift('すべて'), prompt: 'すべて' %>
+      <%= f.select :learning_item, options_for_select(Post.learning_items.keys.unshift('すべて')), prompt: 'すべて', id: 'learning_item' %>
     </div>
     <div id="learning_content_search" class="field" style="display: none;">
       <%= f.label :learning_content, '学習内容で検索' %><br>
-      <%= f.text_field :learning_content %>
+      <%= f.text_field :learning_content, id: 'learning_content' %>
     </div>
     <div class="actions">
       <%= f.submit "検索" %>
@@ -19,9 +19,17 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
+      var form = document.querySelector('form');
       var searchTypeSelect = document.querySelector("#search_type");
       var learningItemSearch = document.querySelector("#learning_item_search");
       var learningContentSearch = document.querySelector("#learning_content_search");
+
+      form.addEventListener('submit', function(event) {
+        if (searchTypeSelect.value === '' || (searchTypeSelect.value === 'learning_item' && document.querySelector('#learning_item').value === '') || (searchTypeSelect.value === 'learning_content' && document.querySelector('#learning_content').value === '')) {
+          event.preventDefault(); // ページ遷移をキャンセル
+          alert('検索項目を選択し、内容を入力してください。');
+        }
+      });
 
       searchTypeSelect.addEventListener("change", function() {
         if (this.value === "learning_item") {
@@ -38,4 +46,3 @@
     });
   </script>
 <% end %>
-

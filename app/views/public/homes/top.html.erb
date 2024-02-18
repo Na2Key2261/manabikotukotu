@@ -7,6 +7,7 @@
       <p>
         ログインして投稿してみよう!<br>
         <%= link_to 'ログイン', new_user_session_path %><br>
+        <%= link_to 'ゲストログイン', users_guest_sign_in_path, method: :post %><br>
         ログインはこちら<br>
         <%= link_to '新規登録', new_user_registration_path %>
       </p>

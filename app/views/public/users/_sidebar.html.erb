@@ -1,17 +1,16 @@
 <div class="sidebar">
   <div class"icon"></div>
-  <% if @user.present? %>
-    <h2><%= @user.name %></h2>
-    <% if @user.image.attached? %>
-      <%= image_tag @user.image, size: "100x100" %>
+  <% if user_signed_in? %>
+    <h2><%= current_user.name %></h2>
+    <% if current_user.image.attached? %>
+      <%= image_tag current_user.image, size: "100x100" %>
     <% else %>
       <%= image_tag 'no_image', size: "100x100" %>
     <% end %><br>
+    <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn btn-secondary" %><br>
+    <%= link_to "あなたの投稿", public_favorites_index_path %>
   <% else %>
     <h5>ゲストユーザー</h5>
   <% end %>
-  <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn btn-secondary" %><br>
-  
-  <%= link_to "あなたの", public_favorites_index_path %>
   <%= render "public/searches/form" %>
 </div>

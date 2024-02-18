@@ -2,7 +2,7 @@ Admin.create!(
   email:"admin@admin",
   password: "adminmin")
   
-User.create!(email: 'guest@example.com', password: 'password', password_confirmation: 'password', guest: true)
+guest_user = User.create(name: "ゲストユーザー", email: "guest@example.com", password: "guestpassword")
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #

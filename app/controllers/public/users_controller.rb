@@ -5,8 +5,8 @@ class Public::UsersController < ApplicationController
   @user = current_user
   @post = Post.new
   @user_name = @user.name
-  @posts = @user.posts.order(created_at: :desc) # ユーザーの投稿のみを取得し、降順で表示する
-  @posts = @user.posts.page(params[:page])
+   # ユーザーの投稿のみを取得し、降順で表示する
+  @posts = @user.posts.order(created_at: :desc).page(params[:page]).per(5)
 
   # 学習時間の合計
   @total_learning_hours = @user.posts.sum(:learning_hour)

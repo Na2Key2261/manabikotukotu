@@ -1,28 +1,40 @@
-<%= @method %>
-<% if @method == 'learning_item' %>
-  <% if @users.present? %>
-    <h2>学習項目の検索結果</h2>
-    <% @users.each do |user| %>
-      <div>
-        <p>ユーザー名: <%= user.name %></p>
-        <p>学習科目: <%= user.posts.map(&:learning_item).join(', ') %></p>
-      </div>
-    <% end %>
-  <% else %>
-    <p>学習項目の検索結果はありません。</p>
-  <% end %>
-<% elsif @method == 'learning_content' %>
-  <% if @posts.present? %>
-    <h2>学習内容の検索結果</h2>
-    <% @posts.each do |post| %>
-      <div>
-        <p>ユーザー名: <%= post.user.name %></p>
-        <p>投稿: <%= post.content %></p>
-      </div>
-    <% end %>
-  <% else %>
-    <p>学習内容の検索結果はありません。</p>
-  <% end %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 border-right">
+      <%= render "public/users/sidebar" %>
+    </div>
+    <div class="col-md-9">
+      <% @posts.each do |post| %>
+        <div class="card mb-3">
+          <div class="card-header">
+            <span><%= post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M") %></span>
+            <span class="float-right">
+              <% if post.favorited_by?(current_user) %>
+                <%= link_to public_post_favorites_url(post, post.favorites.find_by(user_id: current_user.id)), method: :delete do %>
+                  <i class="fa-regular fa-thumbs-up"></i> <%= post.favorites.count %>
+                <% end %>
+              <% else %>
+                <%= link_to public_post_favorites_path(post), method: :post do %>
+                  <i class="fa-solid fa-thumbs-up"></i> <%= post.favorites.count %>
+                <% end %>
+              <% end %>
+            </span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title"><%= post.learning_item %></h5>
+            <p class="card-text">学習時間: <%= post.learning_hour %> 時間</p>
+            <p class="card-text">学習内容: <%= post.learning_content %></p>
+            <a href="<%= public_post_path(post.id) %>" class="btn btn-primary">コメントする</a>
+            <% if user_signed_in? && post.user == current_user %>
+              <%= link_to '編集', edit_public_post_path(post), class: "btn btn-secondary" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
 
-<%= link_to "戻る", mypage_path, class: "btn btn-primary" %>
+
+        <%= link_to "戻る", mypage_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>
