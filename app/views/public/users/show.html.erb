@@ -1,10 +1,11 @@
 <div class="container">
   <div class="row">
-    <div class="col-md3 border-right">
+    <div class="col-md-3 border-right">
       <%= render "public/users/sidebar" %>
     </div>
-<div class="col-md-9">
+    <div class="col-md-9">
       <div class="content">
+        <!-- 学習内容の投稿フォーム -->
         <div class="row">
           <div class="col-md-5">
             <h3>学習内容を投稿しよう！</h3>
@@ -30,8 +31,10 @@
             <p>学習時間の合計: <%= @total_learning_hours %> 時間</p>
             <div id="weekly-learning-chart"></div>
           </div>
+        </div>
 
-    <% if @posts.any? %>
+        <!-- ユーザーの投稿一覧 -->
+        <% if @posts.any? %>
           <h3><%= @user_name %>さんの投稿</h3>
           <div class="container">
             <div class="row">
@@ -69,14 +72,17 @@
         <% else %>
           <p>まだ投稿がありません。</p>
         <% end %>
-        
-        
-          <div class="pagination">
+
+        <!-- ページネーションとリンク -->
+        <div class="pagination">
           <%= paginate @posts %>
         </div>
         <%= link_to "みんなの投稿", public_posts_path %>
+
+        <!-- 合計学習時間の表示 -->
         <h3>学習時間の合計: <%= @total_learning_hours %> 時間</h3>
 
+        <!-- 学習項目別の学習時間の合計の表示 -->
         <% if @learning_items_total.present? %>
           <h4>学習項目別の学習時間の合計</h4>
           <ul>
@@ -86,35 +92,17 @@
           </ul>
         <% end %>
 
-<% if @learning_items_total.present? %>
-  <h4>学習項目別の学習時間の合計</h4>
-  <div id="chart_div" style="width: 100%; height: 300px;"></div>
-
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable(<%= @chart_data.to_json.html_safe %>);
-
-      var options = {
-        title: '学習項目別の学習時間の合計',
-        legend: { position: 'none' },
-      };
-
-      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-
-      chart.draw(data, options);
-    }
-  </script>
-<% end %>
-
-  </div>
-  </div>
+        <!-- 学習項目別の学習時間の合計のグラフ -->
+        <% if @learning_items_total.present? %>
+          <h4>学習項目別の学習時間の合計</h4>
+          <div id="chart_div" style="width: 100%; height: 300px;"></div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- Google チャートのスクリプト読み込みと描画 -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
   google.charts.load('current', {'packages':['corechart']});
@@ -154,4 +142,3 @@
     <% end %>
   }
 </script>
-
