@@ -7,10 +7,10 @@ class Post < ApplicationRecord
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end
-
-  #enum learning_item: { economic: 1, accounting: 2, management: 3, operation: 4, 
-                        #legal: 5, information: 6, small: 7, 
-                        #case_first: 8, case_second: 9, case_third: 10, case_fourth: 11 }
+  
+  def posted_by?(user)
+    self.user == user
+  end
                         
   enum learning_item: { '経済学・経済政策' => 1, '財務・会計' => 2, '企業経営理論' => 3, '運営管理' => 4, 
   '経営法務' => 5, '経営情報システム' => 6, '中小企業経営・政策' => 7, 

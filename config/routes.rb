@@ -17,13 +17,10 @@ Rails.application.routes.draw do
     passwords: 'public/passwords' # Add passwords controller
   }
 
-  # devise_scope :user do
-  #   delete 'users/sign_out', to: 'public/sessions#destroy', as: :logout_user_session
-  # end
-
   devise_scope :user do
-    post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
+    post 'guest_sign_in', to: 'public/sessions#guest_sign_in'
   end
+  
   scope module: :public do
     root 'homes#top'
     get 'users/mypage' => 'users#show', as: 'mypage'
@@ -42,5 +39,6 @@ Rails.application.routes.draw do
       resources :events, only: [:index]
   end
   get 'favorites/index', to: 'favorites#index'
+  
   end
 end

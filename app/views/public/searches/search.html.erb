@@ -8,6 +8,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <span><%= post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M") %></span>
+            <span>ユーザー名: <%= post.user.name %></span>
             <span class="float-right">
               <% if post.favorited_by?(current_user) %>
                 <%= link_to public_post_favorites_url(post, post.favorites.find_by(user_id: current_user.id)), method: :delete do %>
@@ -21,18 +22,23 @@
             </span>
           </div>
           <div class="card-body">
+            <% if post.user.image.attached? %>
+              <%= image_tag post.user.image, size: "50x50" %>
+            <% else %>
+              <%= image_tag 'no_image', size: "50x50" %>
+            <% end %>
             <h5 class="card-title"><%= post.learning_item %></h5>
             <p class="card-text">学習時間: <%= post.learning_hour %> 時間</p>
             <p class="card-text">学習内容: <%= post.learning_content %></p>
             <a href="<%= public_post_path(post.id) %>" class="btn btn-primary">コメントする</a>
-            <% if user_signed_in? && post.user == current_user %>
-              <%= link_to '編集', edit_public_post_path(post), class: "btn btn-secondary" %>
-            <% end %>
+            <% if user_signed_in? && (current_user == post.user) %>
+  <%= link_to '編集', edit_public_post_path(post), class: "btn btn-secondary" %>
+<% elsif !user_signed_in? && current_user.guest? %>
+  <%# ゲストログインの場合は何も表示しない %>
+<% end %>
           </div>
         </div>
       <% end %>
-
-
         <%= link_to "戻る", mypage_path, class: "btn btn-primary" %>
       </div>
     </div>

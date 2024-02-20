@@ -9,23 +9,23 @@
         <div class="row">
           <div class="col-md-5">
             <h3>学習内容を投稿しよう！</h3>
-            <%= form_with(model: [@user, @post], url: public_user_posts_path(@user), method: :post) do |form| %>
-              <div class="field">
-                <%= form.label :learning_item, '学習項目' %>
-                <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください' %>
-              </div>
-              <div class="field">
-                <%= form.label :learning_hour, '学習時間' %>
-                <%= form.number_field :learning_hour, min: 1, max: 24 %>
-              </div>
-              <div class="field">
-                <%= form.label :learning_content, '学習内容' %>
-                <%= form.text_area :learning_content %>
-              </div>
-              <div class="actions">
-                <%= form.submit '投稿' %>
-              </div>
-            <% end %>
+            <%= form_with(model: [@user, @post], url: public_user_posts_path(@user), method: :post, local: true) do |form| %>
+            <div class="field">
+              <%= form.label :learning_item, '学習項目' %>
+              <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください' %>
+            </div>
+            <div class="field">
+              <%= form.label :learning_hour, '学習時間' %>
+              <%= form.number_field :learning_hour, min: 1, max: 24 %>
+            </div>
+            <div class="field">
+              <%= form.label :learning_content, '学習内容' %>
+              <%= form.text_area :learning_content %>
+            </div>
+            <div class="actions">
+              <%= form.submit '投稿' %>
+            </div>
+          <% end %>
           </div>
           <div class="col-md-7">
             <p>学習時間の合計: <%= @total_learning_hours %> 時間</p>
@@ -42,7 +42,7 @@
                 <% @posts.each do |post| %>
                   <div class="card mb-3">
                     <div class="card-header">
-                      <span><%= post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M") %></span>
+                      <span><%= post.created_at.in_time_zone('Tokyo').strftime("%Y/%m/%d %H:%M") %></span>
                       <span class="float-right">
                         <% if post.favorited_by?(current_user) %>
                           <%= link_to public_post_favorites_url(post, post.favorites.find_by(user_id: current_user.id)), method: :delete do %>
@@ -77,7 +77,10 @@
         <div class="pagination">
           <%= paginate @posts %>
         </div>
-        <%= link_to "みんなの投稿", public_posts_path %>
+        <%= link_to public_posts_path do %>
+          みんなの投稿<i class="fa-solid fa-users"></i>
+        <% end %>
+
 
         <!-- 合計学習時間の表示 -->
         <h3>学習時間の合計: <%= @total_learning_hours %> 時間</h3>
@@ -125,7 +128,7 @@
       legend: { position: 'bottom' }
     };
 
-    var weeklyChart = new google.visualization.LineChart(document.getElementById('weekly-learning-chart'));
+    var weeklyChart = new google.visualization.ColumnChart(document.getElementById('weekly-learning-chart'));
     weeklyChart.draw(weeklyData, weeklyOptions);
 
     // 学習項目別の学習時間の合計のグラフ

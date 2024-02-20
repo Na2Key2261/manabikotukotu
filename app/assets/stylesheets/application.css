@@ -13,9 +13,3 @@
  *= require_tree .
  *= require_self
  */
-.icon {
-  width: 100px;
-  height: 100px;
-  background-image: url("uma.png");
-  background-size: cover; /* 画像を要素に合わせて拡大縮小 */
-}

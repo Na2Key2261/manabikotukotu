@@ -22,14 +22,15 @@ class Public::UsersController < ApplicationController
   @weekly_learning_hours = []
   (start_date..Date.today).each do |date|
     formatted_date = date.strftime("%Y-%m-%d")
-    @weekly_learning_hours << { date: formatted_date, hours: weekly_learning_hours[formatted_date] || 0 } if weekly_learning_hours[formatted_date]
+    @weekly_learning_hours << { date: formatted_date, hours: weekly_learning_hours[formatted_date] || 0 } if @weekly_learning_hours.length < 7 && weekly_learning_hours[formatted_date]
+
   end
 
   @chart_data = [['学習項目', '学習時間']]
   @learning_items_total.each do |learning_item, total_hours|
     @chart_data << [learning_item, total_hours]
   end
-end
+  end
 
 
   def edit
@@ -46,6 +47,8 @@ end
       render :edit
     end
   end
+  
+  
 
   private
 

@@ -1,1 +1,25 @@
 @use '~bootstrap/scss/bootstrap';
+.nav-link {
+      color: #333;
+      transition: color 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #007bff;
+    }
+
+    .nav-item {
+      margin-right: 10px;
+    }
+
+    .nav-link.fa-solid:before,
+    .nav-link.fa-solid:after {
+      margin-right: 5px;
+    }
+
+    .nav-link.fa-solid:hover:before,
+    .nav-link.fa-solid:hover:after {
+      color: #007bff;
+    }
+    
+    

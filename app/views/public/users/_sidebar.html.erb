@@ -1,17 +1,21 @@
 <div class="sidebar">
-  <div class"icon"></div>
+  <div class="icon"></div>
   <% if user_signed_in? %>
-    <h2><%= current_user.name %></h2>
+    <h2><i class="fa-solid fa-user-graduate"></i><%= current_user.name %></h2>
+
     <% if current_user.image.attached? %>
       <%= image_tag current_user.image, size: "100x100" %>
     <% else %>
       <%= image_tag 'no_image', size: "100x100" %>
     <% end %><br>
-    <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn btn-secondary" %><br>
-    <%= link_to "あなたの投稿", public_favorites_index_path %>
+    <% unless current_user.guest? %>
+      <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn btn-secondary" %><br>
+      <%= link_to "あなたのいいね", public_favorites_index_path %>
+    <% end %>
   <% else %>
     <h5>ゲストユーザー</h5>
+    <h6>＊ユーザーの投稿を閲覧できます。<br>その他機能はご利用いただけません</h6>
   <% end %>
   <%= render "public/searches/form" %>
-  <div id="calendar"></div>
 </div>
+

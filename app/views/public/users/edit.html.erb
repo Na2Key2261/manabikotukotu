@@ -5,33 +5,36 @@
     </div>
     <div class="col-md-9">
       <div class="content">
-        <h2>ユーザー情報の編集</h2>
+        <h2 class="text-center mb-4">ユーザー情報の編集</h2>
 
         <%= form_for(@user, url: public_user_path(@user), method: :patch) do |form| %>
-          <div class="field">
+          <div class="form-group">
             <%= form.label :name, '名前' %>
-            <%= form.text_field :name %>
+            <%= form.text_field :name, class: "form-control" %>
           </div>
           
-          
+          <div class="form-group">
+            <%= form.label :image %>
+            <%= form.file_field :image, class: "form-control-file user_image", accept: 'image/*' %>
+          </div>
 
-          <div class="field">
+          <div class="form-group">
             <%= form.label :email, 'メールアドレス' %>
-            <%= form.email_field :email %>
+            <%= form.email_field :email, class: "form-control" %>
           </div>
 
-          <div class="field">
+          <div class="form-group">
             <%= form.label :password, 'パスワード' %>
-            <%= form.password_field :password %>
+            <%= form.password_field :password, class: "form-control" %>
           </div>
 
-          <div class="field">
+          <div class="form-group">
             <%= form.label :password_confirmation, 'パスワードの確認' %>
-            <%= form.password_field :password_confirmation %>
+            <%= form.password_field :password_confirmation, class: "form-control" %>
           </div>
 
-          <div class="actions">
-            <%= form.submit '更新', class: 'btn btn-primary' %>
+          <div class="actions text-center">
+            <%= form.submit '更新', class: 'btn btn-primary mr-2' %>
             <%= link_to '戻る', public_user_path(@user), class: 'btn btn-secondary' %>
           </div>
         <% end %>

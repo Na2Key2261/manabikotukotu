@@ -4,11 +4,10 @@
       <%= render "public/users/sidebar" %>
     </div>
     <div class="col-md-9">
-      <div class="content">
+      <div class="content text-center"> <!-- 中央に配置 -->
         <h2>投稿の編集</h2>
 
         <%= form_with(model: @post, url: public_post_path(@post), method: :patch) do |form| %>
-        <%= link_to '削除', public_post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' } , class: "btn btn-warning" %>
           <div class="field">
             <%= form.label :learning_item, '学習項目' %>
             <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください' %>
@@ -21,16 +20,18 @@
 
           <div class="field">
             <%= form.label :learning_content, '学習内容' %>
-            <%= form.text_area :learning_content %>
+            <%= form.text_area :learning_content, cols: 50, rows: 10 %>
           </div>
 
-          <div class="actions">
+          <div class="actions mt-3 d-flex justify-content-between">
+            <%= link_to '削除', public_post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-warning" %>
             <%= form.submit '更新', class: "btn btn-primary"  %>
           </div>
         <% end %>
 
-        
-        <%= link_to "戻る", public_user_path, class: "btn btn-secondary" %>
+        <div class="text-left">
+          <%= link_to "戻る", public_user_path, class: "btn btn-secondary mt-3" %>
+        </div>
       </div>
     </div>
   </div>

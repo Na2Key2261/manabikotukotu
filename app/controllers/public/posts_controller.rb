@@ -26,7 +26,7 @@ class Public::PostsController < ApplicationController
       if @post.save
         redirect_to public_user_path(current_user), notice: '投稿が成功しました。'
       else
-        render :new
+        redirect_to public_user_path(current_user), alert: '各項目を記入してください。'
       end
     else
       redirect_to new_user_session_path, alert: 'ログインが必要です。'

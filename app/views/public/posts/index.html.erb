@@ -34,7 +34,9 @@
                 <p class="card-text">学習項目: <%= post.learning_item %></p>
                 <p class="card-text">学習時間: <%= post.learning_hour %> 時間</p>
                 <p class="card-text">学習内容: <%= post.learning_content %></p>
-                <a href="<%= public_post_path(post.id) %>" class="btn btn-primary">コメントする</a>
+                <% unless current_user.guest? %>
+                  <a href="<%= public_post_path(post.id) %>" class="btn btn-primary">コメントする</a>
+                <% end %>
               </div>
             </div>
           <% end %>
