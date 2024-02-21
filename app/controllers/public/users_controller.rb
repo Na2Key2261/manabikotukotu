@@ -10,6 +10,7 @@ class Public::UsersController < ApplicationController
 
   # 学習時間の合計
   @total_learning_hours = @user.posts.sum(:learning_hour)
+  
 
   # 学習項目別の学習時間の合計
   @learning_items_total = @user.posts.group(:learning_item).sum(:learning_hour)
@@ -23,8 +24,10 @@ class Public::UsersController < ApplicationController
   (start_date..Date.today).each do |date|
     formatted_date = date.strftime("%Y-%m-%d")
     @weekly_learning_hours << { date: formatted_date, hours: weekly_learning_hours[formatted_date] || 0 } if @weekly_learning_hours.length < 7 && weekly_learning_hours[formatted_date]
-
+  
   end
+  # 過去一週間の学習時間の合計
+  @total_weekly_hours = @weekly_learning_hours.sum { |data| data[:hours] }
 
   @chart_data = [['学習項目', '学習時間']]
   @learning_items_total.each do |learning_item, total_hours|

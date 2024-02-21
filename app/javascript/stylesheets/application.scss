@@ -1,4 +1,8 @@
 @use '~bootstrap/scss/bootstrap';
+.bg-lime {
+  background-color: #aaff80 !important;
+}
+
 .nav-link {
       color: #333;
       transition: color 0.3s;
@@ -22,4 +26,68 @@
       color: #007bff;
     }
     
-    
+    .pagination {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination a {
+    display: inline-block;
+    color: black;
+    border-bottom: 3px solid #dedede;
+    text-decoration: none;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.pagination i {
+    line-height: 40px;
+}
+
+.pagination .active a {
+    border-bottom: 3px solid #f09fa1;
+}
+
+.pagination a:hover {
+    border-bottom: 3px solid #efc2c2;
+}
+
+.pagination .disabled a {
+    pointer-events: none;
+    color: #ccc;
+}
+
+.pagination .disabled a:hover {
+    background-color: initial;
+    color: #ccc;
+}
+
+@keyframes horseAnimation {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+  100% { transform: translateX(0); }
+}
+
+.fa-horse {
+  animation: horseAnimation 5s infinite;
+}
+
+.learn-record-link {
+  display: block;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #000;
+  text-decoration: underline;
+  transition: all 0.3s ease;
+}
+
+.learn-record-link:hover {
+  color: #f09fa1;
+}

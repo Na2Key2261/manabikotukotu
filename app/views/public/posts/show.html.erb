@@ -4,9 +4,11 @@
       <%= render "public/users/sidebar" %>
     </div>
     <div class="col-md-9">
-      <div>
+      <div class="content text-center">
+        <h2>コメントの編集</h2>
         <%= form_with model: [@post, @post_comment], url: public_post_post_comments_path(@post) do |f| %>
-          <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+          <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", class: "form-control" %>
+
           <%= f.submit "送信する" %>
         <% end %>
       </div>

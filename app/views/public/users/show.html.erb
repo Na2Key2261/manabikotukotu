@@ -7,36 +7,42 @@
       <div class="content">
         <!-- 学習内容の投稿フォーム -->
         <div class="row">
-          <div class="col-md-5">
-            <h3>学習内容を投稿しよう！</h3>
-            <%= form_with(model: [@user, @post], url: public_user_posts_path(@user), method: :post, local: true) do |form| %>
-            <div class="field">
-              <%= form.label :learning_item, '学習項目' %>
-              <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください' %>
+          <div class="card">
+              <div class="card-body">
+                <h3 class="card-title">まなびを記録しよう！</h3>
+                <%= form_with(model: [@user, @post], url: public_user_posts_path(@user), method: :post, local: true) do |form| %>
+                  <div class="form-group">
+                    <%= form.label :learning_item, '学習項目' %>
+                    <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください', class: 'form-control' %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :learning_hour, '学習時間' %>
+                    <%= form.number_field :learning_hour, min: 1, max: 24, class: 'form-control' %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :learning_content, '学習内容' %>
+                    <%= form.text_area :learning_content, class: 'form-control' %>
+                  </div>
+                  <div class="actions">
+                    <%= form.submit '投稿', class: 'btn btn-primary' %>
+                  </div>
+                <% end %>
+              </div>
             </div>
-            <div class="field">
-              <%= form.label :learning_hour, '学習時間' %>
-              <%= form.number_field :learning_hour, min: 1, max: 24 %>
-            </div>
-            <div class="field">
-              <%= form.label :learning_content, '学習内容' %>
-              <%= form.text_area :learning_content %>
-            </div>
-            <div class="actions">
-              <%= form.submit '投稿' %>
-            </div>
-          <% end %>
-          </div>
-          <div class="col-md-7">
-            <p>学習時間の合計: <%= @total_learning_hours %> 時間</p>
+          <div class="col-md-7 text-center mt-4">
+            <h3>学習時間の合計: <%= @total_learning_hours %> 時間</h3>
             <div id="weekly-learning-chart"></div>
+            <div class="text-center">
+              <h6>合格目指して毎日コツコツと！<i class="fa-solid fa-horse mt-4"></i></h6>
+              <a href="#user_records" class="learn-record-link">あなたの学習記録</a>
+            </div>
           </div>
         </div>
 
         <!-- ユーザーの投稿一覧 -->
         <% if @posts.any? %>
-          <h3><%= @user_name %>さんの投稿</h3>
-          <div class="container">
+          <h3 class="mt-4"><%= @user_name %>さんの投稿</h3>
+          <div class="container mt-4">
             <div class="row">
               <div class="col-md-12">
                 <% @posts.each do |post| %>
@@ -44,6 +50,7 @@
                     <div class="card-header">
                       <span><%= post.created_at.in_time_zone('Tokyo').strftime("%Y/%m/%d %H:%M") %></span>
                       <span class="float-right">
+                        <span class="ml-2"><i class="fa-regular fa-comment-dots"></i> <%= post.post_comments.count %></span>
                         <% if post.favorited_by?(current_user) %>
                           <%= link_to public_post_favorites_url(post, post.favorites.find_by(user_id: current_user.id)), method: :delete do %>
                             <i class="fa-regular fa-thumbs-up"></i> <%= post.favorites.count %>
@@ -73,31 +80,39 @@
           <p>まだ投稿がありません。</p>
         <% end %>
 
-        <!-- ページネーションとリンク -->
-        <div class="pagination">
+
+        <div class="pagination justify-content-center">
           <%= paginate @posts %>
         </div>
-        <%= link_to public_posts_path do %>
-          みんなの投稿<i class="fa-solid fa-users"></i>
-        <% end %>
+        <div class="text-right">
+          <%= link_to public_posts_path do %>
+            みんなの投稿<i class="fa-solid fa-users mt-2"></i>
+          <% end %>
+        </div>
 
 
         <!-- 合計学習時間の表示 -->
-        <h3>学習時間の合計: <%= @total_learning_hours %> 時間</h3>
-
+        <div class="col-md-12 text-center mt-4">
+        <h2 id="user_records" class="text-center"><%= @user_name %>さんの学習記録</h2>
+          <h4>学習時間の合計: <%= @total_learning_hours %> 時間</h4>
+        </div>
+        
         <!-- 学習項目別の学習時間の合計の表示 -->
-        <% if @learning_items_total.present? %>
-          <h4>学習項目別の学習時間の合計</h4>
-          <ul>
-            <% @learning_items_total.each do |learning_item, total_hours| %>
-              <div><i class="fa-solid fa-book-open"></i><%= learning_item %>: <%= total_hours %> 時間</div>
-            <% end %>
-          </ul>
-        <% end %>
+        <div class="col-md-12 mt-4">
+          <% if @learning_items_total.present? %>
+            <h4>学習項目別の学習時間の合計</h4>
+            <ul class="list-group">
+              <% @learning_items_total.each do |learning_item, total_hours| %>
+                <li class="list-group-item"><i class="fa-solid fa-book-open"></i> <%= learning_item %>: <%= total_hours %> 時間</li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+
 
         <!-- 学習項目別の学習時間の合計のグラフ -->
         <% if @learning_items_total.present? %>
-          <h4>学習項目別の学習時間の合計</h4>
+          <h4 class="mt-4">学習項目別の学習時間の合計</h4>
           <div id="chart_div" style="width: 100%; height: 300px;"></div>
         <% end %>
       </div>
@@ -118,12 +133,12 @@
     weeklyData.addColumn('number', '学習時間');
     weeklyData.addRows([
       <% @weekly_learning_hours.each do |data| %>
-        ['<%= data[:date] %>', <%= data[:hours] %>],
-      <% end %>
+  ['<%= Date.parse(data[:date]).strftime("%m/%d") %>', <%= data[:hours] %>],
+<% end %>
     ]);
 
     var weeklyOptions = {
-      title: '過去一週間の学習時間',
+      title: '過去一週間の学習時間（合計: <%= @total_weekly_hours %>時間）',
       curveType: 'function',
       legend: { position: 'bottom' }
     };

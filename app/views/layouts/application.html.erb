@@ -14,42 +14,43 @@
 </head>
 
 <body>
-<header class="navbar-light bg-light">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<header class="navbar-light bg-lime">
+  <nav class="navbar navbar-expand-lg navbar-light bg-lime">
     <div class="container">
       <a class="navbar-brand" href="/"><span>Tytle</span></a>
-
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-          <% if admin_signed_in? %>
-          <li class="nav-item">
-            <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "nav-link fa-solid fa-sign-out-alt" %>
-          </li>
+          <% if guest_signed_in? %>
+            <li class="nav-item">
+              <%= link_to 'みんなの投稿', public_posts_path, class: "nav-link fa-solid fa-users" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトします?' }, class: "nav-link fa-solid fa-sign-out-alt" %>
+            </li>
           <% elsif user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to 'マイページ', mypage_path, class: "nav-link fa-solid fa-house-user" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "みんなの投稿", public_posts_path, class: "nav-link fa-solid fa-users" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "nav-link fa-solid fa-sign-out-alt" %>
-          </li>
-          
+            <li class="nav-item">
+              <%= link_to 'マイページ', mypage_path, class: "nav-link fa-solid fa-house-user" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'みんなの投稿', public_posts_path, class: "nav-link fa-solid fa-users" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "nav-link fa-solid fa-sign-out-alt" %>
+            </li>
           <% else %>
-          <li class="nav-item">
-            <%= link_to '新規登録', new_user_registration_path, class: "nav-link fa-solid fa-user-plus" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'ログイン', new_user_session_path, class: "nav-link fa-solid fa-sign-in-alt" %>
-          </li>
+            <li class="nav-item">
+              <%= link_to '新規登録', new_user_registration_path, class: "nav-link fa-solid fa-user-plus" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'ログイン', new_user_session_path, class: "nav-link fa-solid fa-sign-in-alt" %>
+            </li>
           <% end %>
         </ul>
       </div>
     </div>
   </nav>
-
 </header>
+
 <%= yield %>
 <footer>
   トップへ戻る
