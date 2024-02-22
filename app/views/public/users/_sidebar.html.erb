@@ -1,4 +1,4 @@
-<div class="sidebar">
+<div class="sidebar mt-4">
   <div class="icon"></div>
   <% if user_signed_in? %>
     <h2><i class="fa-solid fa-user-graduate"></i><%= current_user.name %></h2>
@@ -9,13 +9,17 @@
       <%= image_tag 'no_image', size: "100x100" %>
     <% end %><br>
     <% unless current_user.guest? %>
-      <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn btn-secondary" %><br>
-      <%= link_to "あなたのいいね", public_favorites_index_path %>
+      <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn btn-light mt-2" %><br>
+      <%= link_to "あなたの<i class='fa-regular fa-thumbs-up'></i>一覧 ".html_safe, public_favorites_index_path, class: "btn btn-info mt-2" %>
+
     <% end %>
   <% else %>
     <h5>ゲストユーザー</h5>
     <h6>＊ユーザーの投稿を閲覧できます。<br>その他機能はご利用いただけません</h6>
   <% end %>
-  <%= render "public/searches/form" %>
+  <div class="mt-2">
+    <%= render "public/searches/form" %>
+  </div>
+  
 </div>
 

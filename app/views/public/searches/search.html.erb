@@ -7,8 +7,8 @@
       <% @posts.each do |post| %>
         <div class="card mb-3">
           <div class="card-header">
-            <span><%= post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M") %></span>
-            <span>ユーザー名: <%= post.user.name %></span>
+            <span><%= post.created_at.in_time_zone('Tokyo').strftime("%Y/%m/%d %H:%M") %></span>
+            <span>投稿ユーザー名: <%= post.user.name %></span>
             <span class="float-right">
               <% if post.favorited_by?(current_user) %>
                 <%= link_to public_post_favorites_url(post, post.favorites.find_by(user_id: current_user.id)), method: :delete do %>
@@ -23,9 +23,9 @@
           </div>
           <div class="card-body">
             <% if post.user.image.attached? %>
-              <%= image_tag post.user.image, size: "50x50" %>
+              <%= image_tag post.user.image, size: "100x100" %>
             <% else %>
-              <%= image_tag 'no_image', size: "50x50" %>
+              <%= image_tag 'no_image', size: "100x100" %>
             <% end %>
             <h5 class="card-title"><%= post.learning_item %></h5>
             <p class="card-text">学習時間: <%= post.learning_hour %> 時間</p>

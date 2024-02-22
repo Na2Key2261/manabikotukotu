@@ -1,4 +1,12 @@
 @use '~bootstrap/scss/bootstrap';
+body {
+  font-family: 'Arial Rounded MT Bold', sans-serif; /* 任意の丸みのあるフォントを指定 */
+}
+
+.tytle_icon {
+        font-family: 'YourFont', sans-serif;
+}
+      
 .bg-lime {
   background-color: #aaff80 !important;
 }
@@ -32,6 +40,10 @@
     justify-content: center;
     list-style: none;
     padding: 0;
+}
+
+#learning_content {
+  max-width: 100%; /* 親要素の幅を超えないようにする */
 }
 
 .pagination a {

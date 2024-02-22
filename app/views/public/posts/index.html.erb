@@ -4,9 +4,10 @@
       <%= render "public/users/sidebar" %>
     </div>
     <div class="col-md-9">
-      <div class="content">
-        <h3>すべてのユーザーの投稿一覧</h3>
-
+      <div class="content mt-4">
+        <div class="text-center">
+          <h3>みんなの投稿一覧</h3>
+        </div>
         <% if @posts.any? %>
           <% @posts.each do |post| %>
             <div class="card mb-3">
@@ -31,7 +32,7 @@
                 <% else %>
                   <%= image_tag 'no_image', size: "100x100", class: "float-left mr-3" %>
                 <% end %>
-                <h5 class="card-title">投稿者: <%= post.user.name %></h5>
+                <h5 class="card-title">ユーザー名: <%= post.user.name %></h5>
                 <p class="card-text">学習項目: <%= post.learning_item %></p>
                 <p class="card-text">学習時間: <%= post.learning_hour %> 時間</p>
                 <p class="card-text">学習内容: <%= post.learning_content %></p>

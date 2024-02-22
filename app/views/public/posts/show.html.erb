@@ -9,7 +9,7 @@
         <%= form_with model: [@post, @post_comment], url: public_post_post_comments_path(@post) do |f| %>
           <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", class: "form-control" %>
 
-          <%= f.submit "送信する" %>
+          <%= f.submit "コメントする" %>
         <% end %>
       </div>
       <div class="content">
@@ -19,7 +19,8 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-2">
-                  <%= image_tag post_comment.user.image.variant(resize: "50x50"), class: "rounded-circle" if post_comment.user.image.attached? %>
+                  <%= image_tag post_comment.user.image.variant(resize: "100x100!"), class: "img-fluid" if post_comment.user.image.attached? %>
+
                 </div>
                 <div class="col-md-10">
                   <h5 class="card-title"><%= post_comment.user.name %></h5>
@@ -27,6 +28,7 @@
                   <p class="card-text">コメント内容: <%= post_comment.comment %></p>
                   <% if current_user == post_comment.user %>
                     <%= link_to "削除", public_post_post_comment_path(@post, post_comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-sm" %>
+                    
                   <% end %>
                 </div>
               </div>
