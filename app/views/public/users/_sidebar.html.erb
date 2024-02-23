@@ -9,7 +9,7 @@
       <%= image_tag 'no_image', size: "100x100" %>
     <% end %><br>
     <% unless current_user.guest? %>
-      <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn btn-light mt-2" %><br>
+      <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn-edit btn-light mt-2" %><br>
       <%= link_to "あなたの<i class='fa-regular fa-thumbs-up'></i>一覧 ".html_safe, public_favorites_index_path, class: "btn btn-info mt-2" %>
 
     <% end %>

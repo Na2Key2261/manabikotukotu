@@ -4,6 +4,7 @@
       <%= render "public/users/sidebar" %>
     </div>
     <div class="col-md-9">
+      <h2 class="text-center mt-4">あなたのいいね一覧</h2>
       <% @posts.each do |post| %>
         <div class="card mb-3">
           <div class="card-header">
@@ -31,7 +32,7 @@
             <p class="card-text">学習時間: <%= post.learning_hour %> 時間</p>
             <p class="card-text">学習内容: <%= post.learning_content %></p>
             <% unless current_user && current_user.respond_to?(:guest?) && current_user.guest? %>
-              <a href="<%= public_post_path(post.id) %>" class="btn btn-primary">コメントする</a>
+              <a href="<%= public_post_path(post.id) %>" class="btn bg-lime">コメントする</a>
             <% end %>
             <% if user_signed_in? && post.user == current_user && !current_user.guest? %>
               <%= link_to '編集', edit_public_post_path(post), class: "btn btn-secondary" %>

@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     get 'top' => 'homes#top', as: 'admin_top'
     resources :users, only: [:index, :show, :edit, :update]
     resources :posts, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+    resources :posts do
+    resources :post_comments, only: [:destroy]
+  end
   end
 
   devise_for :users, controllers: {

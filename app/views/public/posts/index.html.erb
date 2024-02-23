@@ -37,7 +37,7 @@
                 <p class="card-text">学習時間: <%= post.learning_hour %> 時間</p>
                 <p class="card-text">学習内容: <%= post.learning_content %></p>
                 <% unless current_user.guest? %>
-                  <a href="<%= public_post_path(post.id) %>" class="btn btn-primary">コメントする</a>
+                  <a href="<%= public_post_path(post.id) %>" class="btn bg-lime">コメントする</a>
                 <% end %>
               </div>
             </div>
@@ -46,7 +46,9 @@
           <p>まだ投稿がありません。</p>
         <% end %>
       </div>
-      <%= paginate @posts %>
+      <div class="pagination justify-content-center">
+          <%= paginate @posts %>
+        </div>
 
       <%= link_to "マイページへ戻る", mypage_path, class: "btn btn-secondary" %>
     </div>

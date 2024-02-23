@@ -1,3 +1,28 @@
-<h2>管理者ページ</h2>
-<div><%= link_to 'ユーザー管理', admin_users_path %></div>
-<div><%= link_to 'コメント管理', admin_posts_path %></div>
+<div class="container">
+  <div class="text-center mt-4">
+    <h2>管理者ページ</h2>
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">ユーザー管理</h5>
+            <p class="card-text">ユーザー情報の管理や編集を行います。</p>
+            <%= link_to 'ユーザー管理', admin_users_path, class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">投稿管理</h5>
+            <p class="card-text">投稿されたコメントの管理を行います。</p>
+            <%= link_to 'コメント管理', admin_posts_path, class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

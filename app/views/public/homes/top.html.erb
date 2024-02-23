@@ -1,7 +1,6 @@
-<section class="wrapper flex">
-
-  <div class="content">
-    <h1>まなびコツコツ</h1>
+<div class="container">
+  <div class="text-center">
+    <h1class="text-center">まなびコツコツ</h1>
     <div class="mv">
       <p>
         まなびコツコツは中小企業診断士試験の合格を目指し、日々勉強している方のためのサイトです。<br>
@@ -15,6 +14,15 @@
       </p>
     </div>
     <p><%= link_to 'ゲストログイン(閲覧専用)', guest_sign_in_path, method: :post %><br></p>
-
   </div>
-</section>
+  <div>
+    <p>学習が終わったら記録を投稿！</p>
+    <%= image_tag("top2.png", class: "top_logo_first") %>
+  </div>
+  <div>
+    <p>学習の形跡が一目でわかる！</p>
+    <%= image_tag("top1.png", class: "top_logo_second") %>
+    <%= image_tag("top3.png", class: "top_logo_third") %>
+    <%= image_tag("top4.png", class: "top_logo_fourth") %>
+  </div>
+</div>

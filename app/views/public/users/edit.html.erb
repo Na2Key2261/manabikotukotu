@@ -5,7 +5,7 @@
     </div>
     <div class="col-md-9">
       <div class="content">
-        <h2 class="text-center mb-4">ユーザー情報の編集</h2>
+        <h2 class="text-center mt-4">ユーザー情報の編集</h2>
 
         <%= form_for(@user, url: public_user_path(@user), method: :patch) do |form| %>
           <div class="form-group">
@@ -34,7 +34,7 @@
           </div>
 
           <div class="actions text-center">
-            <%= form.submit '更新', class: 'btn btn-primary mr-2' %>
+            <%= form.submit '更新', class: 'btn bg-lime mr-2' %>
             <%= link_to '戻る', public_user_path(@user), class: 'btn btn-secondary' %>
           </div>
         <% end %>

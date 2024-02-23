@@ -1,5 +1,5 @@
-
-<h2>ユーザー一覧</h2>
+<div class="container">
+  <div class="text-center mt-4"><h2>ユーザー一覧</h2>
 
 <% if @users.any? %>
   <table class="table">
@@ -7,7 +7,7 @@
       <tr>
         <th>名前</th>
         <th>メールアドレス</th>
-        <th>会員ステータス</th> <!-- ここを追加 -->
+        <th>会員ステータス</th>
         <th>編集</th>
       </tr>
     </thead>
@@ -16,7 +16,7 @@
         <tr>
           <td><%= user.name %></td>
           <td><%= user.email %></td>
-          <td><%= user.is_active ? '有効' : '停止' %></td> <!-- ここを追加 -->
+          <td><%= user.is_active ? '有効' : '停止' %></td>
           <td><%= link_to '編集', edit_admin_user_path(user), class: 'btn btn-primary' %></td>
         </tr>
       <% end %>
@@ -27,3 +27,5 @@
 <% end %>
 
 <%= link_to '戻る', admin_top_path, class: 'btn btn-primary' %>
+  </div>
+</div>

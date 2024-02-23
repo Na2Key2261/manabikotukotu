@@ -1,7 +1,7 @@
 class Public::FavoritesController < ApplicationController
   def index
     @user = current_user
-    @favorite_posts = @user.favorites.map(&:post)
+    @favorite_posts = @user.favorites.map(&:post).sort_by(&:created_at).reverse
   end
   
   def create
