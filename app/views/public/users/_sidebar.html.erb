@@ -6,7 +6,7 @@
     <% if current_user.image.attached? %>
       <%= image_tag current_user.image, size: "100x100" %>
     <% else %>
-      <%= image_tag 'no_image', size: "100x100" %>
+      <%= image_tag 'no_image.jpg', size: "100x100" %>
     <% end %><br>
     <% unless current_user.guest? %>
       <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn-edit btn-light mt-2" %><br>

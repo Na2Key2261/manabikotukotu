@@ -30,7 +30,7 @@
                 <% if post.user.image.attached? %>
                   <%= image_tag post.user.image, size: "100x100", class: "float-left mr-3" %>
                 <% else %>
-                  <%= image_tag 'no_image', size: "100x100", class: "float-left mr-3" %>
+                  <%= image_tag 'no_image.jpg', size: "100x100", class: "float-left mr-3" %>
                 <% end %>
                 <h5 class="card-title">ユーザー名: <%= post.user.name %></h5>
                 <p class="card-text">学習項目: <%= post.learning_item %></p>
