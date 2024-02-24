@@ -1,28 +1,39 @@
-<div class="container">
-  <div class="text-center">
-    <h1class="text-center">まなびコツコツ</h1>
-    <div class="mv">
-      <p>
+<div class="container text-center">
+  <h1 class="mt-4">まなびコツコツ</h1>
+  <div class="mv">
+    <div class="border border-primary p-4 d-inline-block rotate">
+      <p class="text-primary">
         まなびコツコツは中小企業診断士試験の合格を目指し、日々勉強している方のためのサイトです。<br>
         日々の学習を投稿し、学習の歩みを確認できます。<br>
         コツコツ学んで合格を目指しましょう！<br>
-        早速ログインして投稿しよう!<br>
-        <%= link_to 'ログイン', new_user_session_path %><br>
-
-        新機関員登録はこちら<br>
-        <%= link_to '新規登録', new_user_registration_path %>
+        <%= link_to 'ログイン', new_user_session_path, class: "btn btn-primary mt-3" %><br>
+        <%= link_to '新規会員登録はこちら', new_user_registration_path, class: "btn btn-success mt-3" %>
       </p>
+      <p><%= link_to 'ゲストログイン(閲覧専用)', guest_sign_in_path, method: :post, class: "mt-3" %></p>
     </div>
-    <p><%= link_to 'ゲストログイン(閲覧専用)', guest_sign_in_path, method: :post %><br></p>
   </div>
-  <div>
-    <p>学習が終わったら記録を投稿！</p>
-    <%= image_tag("top2.png", class: "top_logo_first") %>
+
+  <div class="text-center">
+    <div class="border border-success rounded-pill mt-4 p-3">
+      <h3><i class="fa-solid fa-pencil"></i>まなびコツコツについて<i class="fa-solid fa-pencil"></i></h3>
+    </div>
+    <div class="mt-5">
+      <h3>学習が終わったら記録を投稿！</h3>
+      <%= image_tag("top2.png", class: "logo top_logo_first") %>
+    </div>
+    <div class="mt-5 border border-success p-4">
+  <h3>学習の形跡が一目でわかる！</h3>
+  <div class="image-row">
+    <%= image_tag("top1.png", class: "logo top_logo_second") %>
+    <%= image_tag("top4.png", class: "logo top_logo_fourth") %>
   </div>
-  <div>
-    <p>学習の形跡が一目でわかる！</p>
-    <%= image_tag("top1.png", class: "top_logo_second") %>
-    <%= image_tag("top3.png", class: "top_logo_third") %>
-    <%= image_tag("top4.png", class: "top_logo_fourth") %>
+  <div class="mt-4">
+    <%= image_tag("top3.png", class: "logo top_logo_third") %>
+  </div>
+</div>
+
+    <div class="mt-6">
+      <h3><%= link_to '早速始めてみよう！', new_user_session_path %></h3>
+    </div>
   </div>
 </div>

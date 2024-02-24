@@ -1,5 +1,5 @@
 @use '~bootstrap/scss/bootstrap';
-body {
+all{
   font-family: 'Arial Rounded MT Bold', sans-serif; /* 任意の丸みのあるフォントを指定 */
 }
 
@@ -34,7 +34,38 @@ body {
       color: #007bff;
     }
     
+.mv {
+  border-bottom: 1px solid #ccc; /* 枠線のスタイルを設定 */
+  padding-top: 20px; /* 枠線とコンテンツの間のスペースを設定 */
+}
     
+.logo{
+  max-width: 100%;
+  height: auto;
+}
+
+.logo.top_logo_first {
+  width: 60%;
+  height: auto;
+}
+
+.image-row {
+  display: flex;
+  justify-content: space-between; 
+}
+
+.logo.top_logo_second,
+.logo.top_logo_fourth {
+  width: 40%; /* 各画像が合計で80%となるように設定 */
+  height: auto;
+}
+
+.logo.top_logo_third {
+  width: 60%; /* 一番下の画像は60% */
+  height: auto;
+}
+
+
 
 #learning_content {
   max-width: 100%; /* 親要素の幅を超えないようにする */

@@ -1,40 +1,42 @@
-<section class="inner">
-  <h2 class="section-ttl">新規会員登録</h2>
+<section class="container">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">新規会員登録</h2>
 
-  <%= form_with model: @user, url: user_registration_path, local: true do |f| %>
+      <%= form_with model: @user, url: user_registration_path, local: true do |f| %>
+        <%= render 'layouts/error_messages', resource: @user %>
 
-    <%= render 'layouts/error_messages', resource: @user %>
-    <table class="customer_info customer_form">
-      <thead>
-        <th></th>
-        <th></th>
-        <th></th>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ニックネーム</td>
-          <td colspan="2"><%= f.text_field :name, :placeholder =>"ニックネーム" %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :email, "メールアドレス" %></td>
-          <td colspan="2"><%= f.email_field :email, autocomplete: "email" %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :password, "パスワード(#{@minimum_password_length}文字以上)" %></td>
-          <td colspan="2"><%= f.password_field :password, autocomplete: "new-password" %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :password_confirmation, "パスワード(確認用)" %></td>
-          <td colspan="2"><%= f.password_field :password_confirmation, autocomplete: "new-password" %></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td colspan="2"><%= f.submit "新規登録", class: "btn btn-success" %></td>
-        </tr>
-      </tbody>
-    </table>
-  <% end %>
+        <div class="form-group">
+          <%= f.label :name, "ニックネーム" %>
+          <%= f.text_field :name, class: "form-control", placeholder: "ニックネーム" %>
+        </div>
 
-  <h2 class="section-ttl">既に登録済みの方</h2>
-  <p><%= link_to "こちら", new_user_session_path, class: "underline" %>からログインしてください。</p>
+        <div class="form-group">
+          <%= f.label :email, "メールアドレス" %>
+          <%= f.email_field :email, class: "form-control", autocomplete: "email" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password, "パスワード(#{@minimum_password_length}文字以上)" %>
+          <%= f.password_field :password, class: "form-control", autocomplete: "new-password" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password_confirmation, "パスワード(確認用)" %>
+          <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.submit "新規登録", class: "btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-body">
+      <h2 class="card-title">既に登録済みの方</h2>
+      <p><%= link_to "こちら", new_user_session_path, class: "underline" %>からログインしてください。</p>
+    </div>
+  </div>
 </section>
