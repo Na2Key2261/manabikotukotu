@@ -125,7 +125,6 @@
                             <i class="fa-solid fa-pencil"></i>
                             編集
                         </a>
-
                       <% end %>
                     </div>
                   </div>
@@ -141,7 +140,6 @@
         </div>
         <% end %>
 
-
         <div class="pagination justify-content-center">
           <%= paginate @posts %>
         </div>
@@ -150,7 +148,6 @@
             みんなの投稿<i class="fa-solid fa-users mt-2"></i>
           <% end %>
         </div>
-
 
         <!-- 合計学習時間の表示 -->
         <div class="col-md-12 text-center mt-4">
@@ -170,7 +167,6 @@
           <% end %>
         </div>
 
-
         <!-- 学習項目別の学習時間の合計のグラフ -->
         <% if @learning_items_total.present? %>
           <h4 class="top_text text-center mt-4">学習項目別の学習時間の合計</h4>
@@ -178,53 +174,48 @@
         <% end %>
       </div>
     </div>
-    
   </div>
 </div>
 
 <!-- Google チャートのスクリプト読み込みと描画 -->
+<!-- Google チャートのスクリプト読み込みと描画 -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
+
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawCharts);
+function drawCharts() {
+  // 過去一週間の学習時間のグラフ
+  var weeklyData = new google.visualization.DataTable();
+  weeklyData.addColumn('string', '日付');
+  weeklyData.addColumn('number', '学習時間');
+  weeklyData.addRows([
+    <% @weekly_learning_hours.reverse.each do |data| %>
+      ['<%= data[:date] %>', <%= data[:hours] %>],
+    <% end %>
+  ]);
+  var weeklyOptions = {
+    title: '過去一週間の学習時間（合計: <%= @total_weekly_hours %>時間）',
+    curveType: 'function',
+    legend: { position: 'bottom' },
+    colors: ['#9ACD32'] 
+  };
   
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawCharts);
-
-  function drawCharts() {
-    // 過去一週間の学習時間のグラフ
-    var weeklyData = new google.visualization.DataTable();
-    weeklyData.addColumn('string', '日付');
-    weeklyData.addColumn('number', '学習時間');
-    weeklyData.addRows([
-      <% @weekly_learning_hours.reverse.each do |data| %>
-        ['<%= data[:date] %>', <%= data[:hours] %>],
-      <% end %>
-    ]);
-
-    var weeklyOptions = {
-      title: '過去一週間の学習時間（合計: <%= @total_weekly_hours %>時間）',
-      curveType: 'function',
-      legend: { position: 'bottom' },
-      colors: ['#9ACD32'] // グラフの色を緑に変更
+  var chart = new google.visualization.ColumnChart(document.getElementById('weekly-learning-chart'));
+  chart.draw(weeklyData, weeklyOptions);
+  // 学習項目別の学習時間の合計のグラフ
+  <% if @chart_data.present? %>
+    var chartData = google.visualization.arrayToDataTable(<%= @chart_data.to_json.html_safe %>);
+    var options = {
+      title: '学習項目別の学習時間の合計',
+      legend: { position: 'none' },
+      colors: ['#9ACD32'] 
     };
     
-    var chart = new google.visualization.ColumnChart(document.getElementById('weekly-learning-chart'));
-    chart.draw(weeklyData, weeklyOptions);
-
-    // 学習項目別の学習時間の合計のグラフ
-    <% if @chart_data.present? %>
-      var chartData = google.visualization.arrayToDataTable(<%= @chart_data.to_json.html_safe %>);
-
-      var options = {
-  title: '学習項目別の学習時間の合計',
-  legend: { position: 'none' },
-  colors: ['#9ACD32'] // グラフの色を緑に変更
-};
-
-var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-chart.draw(chartData, options);
-    <% end %>
-  }
-  
+    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+    chart.draw(chartData, options);
+  <% end %>
+}
 </script>
 
 
