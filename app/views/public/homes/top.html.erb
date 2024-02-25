@@ -1,39 +1,43 @@
 <div class="container text-center">
   <h1 class="mt-4">まなびコツコツ</h1>
-  <div class="mv">
+  <div>
     <div class="border border-primary p-4 d-inline-block rotate">
-      <p class="text-primary">
-        まなびコツコツは中小企業診断士試験の合格を目指し、日々勉強している方のためのサイトです。<br>
+      <h5 class="text-primary">
+        まなびコツコツは中小企業診断士試験の合格を目指し、日々の学習を記録する場です。<br>
         日々の学習を投稿し、学習の歩みを確認できます。<br>
         コツコツ学んで合格を目指しましょう！<br>
         <%= link_to 'ログイン', new_user_session_path, class: "btn btn-primary mt-3" %><br>
         <%= link_to '新規会員登録はこちら', new_user_registration_path, class: "btn btn-success mt-3" %>
+      </h5>
+      <p>
+        <%= link_to 'ゲストログイン(閲覧専用)<br>登録せずにユーザーの投稿が閲覧できます'.html_safe, guest_sign_in_path, method: :post, class: "btn btn-outline-dark mt-3" %>
       </p>
-      <p><%= link_to 'ゲストログイン(閲覧専用)', guest_sign_in_path, method: :post, class: "mt-3" %></p>
     </div>
   </div>
 
   <div class="text-center">
     <div class="border border-success rounded-pill mt-4 p-3">
-      <h3><i class="fa-solid fa-pencil"></i>まなびコツコツについて<i class="fa-solid fa-pencil"></i></h3>
+      <h2 class="top_text"><i class="fa-solid fa-pencil"></i>まなびコツコツについて<i class="fa-solid fa-pencil"></i></h2>
     </div>
     <div class="mt-5">
-      <h3>学習が終わったら記録を投稿！</h3>
+      <h4 class="top_text">学習が終わったら記録を投稿！<br>
+        日々のまなびを記録しましょう！
+      </h4>
       <%= image_tag("top2.png", class: "logo top_logo_first") %>
     </div>
     <div class="mt-5 border border-success p-4">
-  <h3>学習の形跡が一目でわかる！</h3>
-  <div class="image-row">
-    <%= image_tag("top1.png", class: "logo top_logo_second") %>
-    <%= image_tag("top4.png", class: "logo top_logo_fourth") %>
-  </div>
-  <div class="mt-4">
-    <%= image_tag("top3.png", class: "logo top_logo_third") %>
-  </div>
-</div>
+      <h4 class="top_text">学習の形跡が一目でわかる！</h4>
+      <div class="image-row">
+        <%= image_tag("top1.png", class: "logo top_logo_second") %>
+        <%= image_tag("top4.png", class: "logo top_logo_fourth") %>
+      </div>
+      <div class="mt-4">
+        <%= image_tag("top3.png", class: "logo top_logo_third") %>
+      </div>
+    </div>
 
     <div class="mt-6">
-      <h3><%= link_to '早速始めてみよう！', new_user_session_path %></h3>
+      <h3 class="top_text sign_in_link"><%= link_to '早速始めてみよう！', new_user_registration_path %></h3>
     </div>
   </div>
 </div>

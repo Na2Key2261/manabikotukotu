@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>まなびコツコツ</title>
+    <title class="top_text">まなびコツコツ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -17,11 +17,16 @@
 <header class="navbar-light bg-lime">
   <nav class="navbar navbar-expand-lg navbar-light bg-lime">
     <div class="container">
-      <% if user_signed_in? %>
-        <a class="navbar-brand" href="<%= mypage_path %>"><span>まなびコツコツ</span></a>
+      <% if guest_signed_in? %>
+        <a class="tytle_icon navbar-brand" href="<%= public_posts_path %>"><span>まなびコツコツ</span></a>
       <% else %>
-        <a class="tytle_icon navbar-brand" href="/"><span>まなびコツコツ</span></a>
+        <% if user_signed_in? %>
+          <a class="tytle_icon navbar-brand" href="<%= mypage_path %>"><span>まなびコツコツ</span></a>
+        <% else %>
+          <a class="tytle_icon navbar-brand" href="/"><span>まなびコツコツ</span></a>
+        <% end %>
       <% end %>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <% if guest_signed_in? %>
@@ -66,8 +71,27 @@
 </header>
 
 <%= yield %>
-<footer>
-
+<footer class="mt-4">
+  <a href="#" id="back-to-top" class="btn btn-outline-dark btn-floating btn-lg"><i class="fa-solid fa-circle-up"></i></a>
 </footer>
+
 </body>
 </html>
+<script>
+  $(document).ready(function() {
+    $(window).scroll(function() {
+      if ($(this).scrollTop() > 100) {
+        $('#back-to-top').fadeIn();
+      } else {
+        $('#back-to-top').fadeOut();
+      }
+    });
+
+    $('#back-to-top').click(function() {
+      $('body,html').animate({
+        scrollTop: 0
+      }, 400);
+      return false;
+    });
+  });
+</script>

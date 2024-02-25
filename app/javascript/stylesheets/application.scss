@@ -3,8 +3,22 @@ all{
   font-family: 'Arial Rounded MT Bold', sans-serif; /* 任意の丸みのあるフォントを指定 */
 }
 
+body {
+  background-color: #E6F5C9; /* 黄緑 */
+  }
+
 .tytle_icon {
-        font-family: 'YourFont', sans-serif;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.header_logo {
+  font-family: Arial, sans-serif;/* フォントファミリー */
+  font-size: 36px; /* フォントサイズ */
+  font-weight: bold; /* 太字 */
+  color: #333; /* テキストの色 */
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); /* テキストに影を付ける */
 }
       
 .bg-lime {
@@ -12,28 +26,24 @@ all{
 }
 
 .nav-link {
-      color: #333;
-      transition: color 0.3s;
-    }
-
-    .nav-link:hover {
-      color: #007bff;
-    }
-
-    .nav-item {
-      margin-right: 10px;
-    }
-
-    .nav-link.fa-solid:before,
-    .nav-link.fa-solid:after {
-      margin-right: 5px;
-    }
-
-    .nav-link.fa-solid:hover:before,
-    .nav-link.fa-solid:hover:after {
-      color: #007bff;
-    }
-    
+  color: #333;
+  transition: color 0.3s;
+  }
+.nav-link:hover {
+  color: #007bff;
+}
+.nav-item {
+  margin-right: 10px;
+}
+.nav-link.fa-solid:before,
+.nav-link.fa-solid:after {
+  margin-right: 5px;
+}
+.nav-link.fa-solid:hover:before,
+.nav-link.fa-solid:hover:after {
+  color: #007bff;
+}
+  
 .mv {
   border-bottom: 1px solid #ccc; /* 枠線のスタイルを設定 */
   padding-top: 20px; /* 枠線とコンテンツの間のスペースを設定 */
@@ -42,6 +52,13 @@ all{
 .logo{
   max-width: 100%;
   height: auto;
+  border: 1px solid #ccc;
+  border-radius: 3px; 
+}
+
+.sign_in_link {
+  margin-top: 20px; /* 上部の余白 */
+  margin-bottom: 20px; /* 下部の余白 */
 }
 
 .logo.top_logo_first {
@@ -65,7 +82,12 @@ all{
   height: auto;
 }
 
-
+.btn-floating {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
 
 #learning_content {
   max-width: 100%; /* 親要素の幅を超えないようにする */
@@ -117,6 +139,23 @@ all{
     box-shadow: 0 0 10px #222;
 }
 
+.btn-info {
+  background-color: #5bc0de; /* ボタンの背景色（情報を示す青色） */
+  color: #fff; /* ボタンのテキスト色（白色） */
+  padding: 10px 20px; /* パディング（上下左右に10px） */
+  border: none; /* ボーダーなし */
+  border-radius: 5px; /* 角丸 */
+  text-decoration: none; /* リンクの下線を消す */
+}
+
+.btn-info:hover {
+  background-color: #2aabd2; /* マウスホバー時の背景色 */
+}
+
+.btn-info .fa-regular {
+  margin-right: 5px; /* アイコンとテキストの間のスペース */
+}
+
 .btn-edit {
     display: inline-flex;
     align-items: center;
@@ -131,6 +170,19 @@ all{
     transition: all 0.3s;
 }
 
+.btn-edit_post {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    border: 3px solid #7fff00;
+    cursor: pointer;
+    color: #ffffff;
+    fill: #7fff00;
+    font-size: 1rem;
+    overflow: hidden;
+    transition: all 0.3s;
+}
 
 @keyframes horseAnimation {
   0% { transform: translateX(0); }
@@ -168,9 +220,31 @@ all{
     border-color: #9ACD32; /* ボーダーの色も変更（必要に応じて） */
 }
 
-#weekly-learning-chart {
-    border: 1px solid #ccc; /* 枠線の色と太さを指定 */
-    padding: 10px; /* 枠線とグラフの間に余白を設定 */
+.top_text{
+  font-size: 24px; /* フォントサイズ */
+  font-weight: bold; /* 太字 */
+  color: #333; /* テキストの色 */
+  text-align: center; /* 中央揃え */
+  margin-bottom: 20px; /* 下の余白 */
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); /* テキストに影を付ける */
 }
 
+footer{
+  margin-top:20px;
+}
 
+.card {
+  background-color: #E0FFFF; /* 水色 */
+  border-color: #E0FFFF; /* 枠線の色も同じにする */
+}
+/* カードのテキスト色を設定 */
+.card-title,
+.card-text,
+.card-subtitle {
+  color: #333; /* 黒色 */
+}
+/* リストグループの背景色を設定 */
+.list-group-item {
+  background-color: #E0FFFF; /* 水色 */
+  border-color: #E0FFFF; /* 枠線の色も同じにする */
+}

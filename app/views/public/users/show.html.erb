@@ -8,12 +8,48 @@
         <!-- 学習内容の投稿フォーム -->
         <div>
         <div class="text-center mt-4">
-            <h3>学習時間の合計: <%= @total_learning_hours %> 時間</h3>
+            <h3 class="top_text">学習時間の合計: <%= @total_learning_hours %> 時間</h3>
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">今日の記録</h5>
+                    <p class="card-text"><%= @total_today_learning_hours %> 時間</p>
+                    <% if @learning_items_today.present? %>
+            
+                      <ul class="list-group list-group-flush">
+                        <% @learning_items_today.each do |learning_item, total_hours| %>
+                          <li class="list-group-item"><i class="fa-solid fa-book-open"></i> <%= learning_item %>: <%= total_hours %> 時間</li>
+                        <% end %>
+                      </ul>
+                    <% else %>
+                      <p class="card-text"></p>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+                <div class="col-md-6">
+                  <div class="card mb-4">
+                    <div class="card-body">
+                      <h5 class="card-title">きのうの記録</h5>
+                      <p class="card-text"><%= @total_yesterday_learning_hours %> 時間</p>
+                      <% if @learning_items_yesterday.present? %>
+                        <ul class="list-group list-group-flush">
+                        <% @learning_items_yesterday.each do |learning_item, total_hours| %>
+                          <li class="list-group-item"><i class="fa-solid fa-book-open"></i> <%= learning_item %>: <%= total_hours %> 時間</li>
+                        <% end %>
+                      </ul>
+                    <% else %>
+                      
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
             <a href="#user_records" class="learn-record-link　mt-4">あなたの学習記録</a>
-            <div id="weekly-learning-chart"></div>
+            <div id="weekly-learning-chart" class="mt-2"></div>
             <div class="text-center mt-2">
               <h6>合格目指して毎日コツコツと！<i class="fa-solid fa-horse mt-4"></i></h6>
-              
             </div>
           </div>
         </div
@@ -99,9 +135,9 @@
           </div>
         <% else %>
         <div class="text-center mt-4">
-          <h4>まだ投稿はありません。<br>
+          <h3 class="top_text">まだ投稿はありません。<br>
             学習の記録を投稿してみよう！
-          </h4>
+          </h3>
         </div>
         <% end %>
 
@@ -118,14 +154,14 @@
 
         <!-- 合計学習時間の表示 -->
         <div class="col-md-12 text-center mt-4">
-        <h2 id="user_records" class="text-center"><%= @user_name %>さんの学習記録</h2>
-          <h4>学習時間の合計: <%= @total_learning_hours %> 時間</h4>
+        <h2 id="user_records" class="text-center">~<%= @user_name %>さんの学習記録~</h2>
+          <h4 class="top_text">学習時間の合計: <%= @total_learning_hours %> 時間</h4>
         </div>
 
         <!-- 学習項目別の学習時間の合計の表示 -->
         <div class="col-md-12 mt-4">
           <% if @learning_items_total.present? %>
-            <h4>学習項目別の学習時間の合計</h4>
+            <h4 class="top_text">学習項目別の学習時間の合計</h4>
             <ul class="list-group">
               <% @learning_items_total.each do |learning_item, total_hours| %>
                 <li class="list-group-item"><i class="fa-solid fa-book-open"></i> <%= learning_item %>: <%= total_hours %> 時間</li>
@@ -137,17 +173,19 @@
 
         <!-- 学習項目別の学習時間の合計のグラフ -->
         <% if @learning_items_total.present? %>
-          <h4 class="text-center mt-4">学習項目別の学習時間の合計</h4>
+          <h4 class="top_text text-center mt-4">学習項目別の学習時間の合計</h4>
           <div id="chart_div"></div>
         <% end %>
       </div>
     </div>
+    
   </div>
 </div>
 
 <!-- Google チャートのスクリプト読み込みと描画 -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
+  
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawCharts);
 
@@ -157,8 +195,8 @@
     weeklyData.addColumn('string', '日付');
     weeklyData.addColumn('number', '学習時間');
     weeklyData.addRows([
-      <% (0..6).to_a.reverse.each do |i| %>
-        ['<%= (Date.today - i).strftime("%m/%d") %>', <%= @weekly_learning_hours[i][:hours] rescue 0 %>],
+      <% @weekly_learning_hours.reverse.each do |data| %>
+        ['<%= data[:date] %>', <%= data[:hours] %>],
       <% end %>
     ]);
 
@@ -186,6 +224,7 @@ var chart = new google.visualization.ColumnChart(document.getElementById('chart_
 chart.draw(chartData, options);
     <% end %>
   }
+  
 </script>
 
 

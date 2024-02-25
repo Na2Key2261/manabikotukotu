@@ -1,25 +1,22 @@
-<div class="sidebar mt-4">
-  <div class="icon"></div>
+<div class="sidebar mt-4 text-center">
   <% if user_signed_in? %>
-    <h2><i class="fa-solid fa-user-graduate"></i><%= current_user.name %></h2>
-
-    <% if current_user.image.attached? %>
-      <%= image_tag current_user.image, size: "100x100" %>
-    <% else %>
-      <%= image_tag 'no_image.jpg', size: "100x100" %>
-    <% end %><br>
+    <div class="user-avatar">
+        <% if current_user.image.attached? %>
+          <%= image_tag current_user.image, size: "100x100" %>
+        <% else %>
+          <%= image_tag 'no_image.jpg', size: "100x100" %>
+        <% end %>
+      </div>
+      <h2 class="user-name"><%= current_user.name %></h2>
     <% unless current_user.guest? %>
       <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn-edit btn-light mt-2" %><br>
       <%= link_to "あなたの<i class='fa-regular fa-thumbs-up'></i>一覧 ".html_safe, public_favorites_index_path, class: "btn btn-info mt-2" %>
-
     <% end %>
   <% else %>
-    <h5>ゲストユーザー</h5>
-    <h6>＊ユーザーの投稿を閲覧できます。<br>その他機能はご利用いただけません</h6>
   <% end %>
   <div class="mt-2">
     <%= render "public/searches/form" %>
   </div>
-  
 </div>
+
 

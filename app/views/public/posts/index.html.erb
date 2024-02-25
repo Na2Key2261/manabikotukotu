@@ -6,7 +6,7 @@
     <div class="col-md-9">
       <div class="content mt-4">
         <div class="text-center">
-          <h3>みんなの投稿一覧</h3>
+          <h3 class="top_text">みんなの投稿一覧</h3>
         </div>
         <% if @posts.any? %>
           <% @posts.each do |post| %>
@@ -37,7 +37,7 @@
                 <p class="card-text">学習時間: <%= post.learning_hour %> 時間</p>
                 <p class="card-text">学習内容: <%= post.learning_content %></p>
                 <% unless current_user.guest? %>
-                  <a href="<%= public_post_path(post.id) %>" class="btn bg-lime">コメントする</a>
+                  <a href="<%= public_post_path(post.id) %>" class="btn btn-edit_post bg-lime">コメントする</a>
                 <% end %>
               </div>
             </div>
@@ -49,8 +49,6 @@
       <div class="pagination justify-content-center">
           <%= paginate @posts %>
         </div>
-
-      <%= link_to "マイページへ戻る", mypage_path, class: "btn btn-secondary" %>
     </div>
   </div>
 </div>
