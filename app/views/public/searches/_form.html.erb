@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-  <%= form_with(url: public_search_path, method: :get, local: true) do |f| %>
+  <%= form_with(url: public_search_path, method: :get, local: true, id: 'search_form') do |f| %>
     <div class="field">
       <%= f.label :search_type, '検索' %>
       <%= f.select :search_type, options_for_select({ "学習項目" => "learning_item", "学習内容" => "learning_content" }), prompt: '選択してください', id: 'search_type' %>
@@ -12,37 +12,59 @@
       <%= f.label :learning_content, '学習内容で検索' %><br>
       <%= f.text_field :learning_content, id: 'learning_content' %>
     </div>
-    <div class="actions">
-      <%= f.submit "検索" %>
+    <div class="actions mt-4">
+      <%= f.submit "検索", id: 'search_button', disabled: true %>
     </div>
   <% end %>
 
+  <div id="error_message" style="color: red; display: none;">選択または入力してください</div>
+
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      var form = document.querySelector('form');
-      var searchTypeSelect = document.querySelector("#search_type");
-      var learningItemSearch = document.querySelector("#learning_item_search");
-      var learningContentSearch = document.querySelector("#learning_content_search");
+      var form = document.getElementById('search_form');
+      var searchTypeSelect = document.getElementById('search_type');
+      var learningItemSelect = document.getElementById('learning_item');
+      var learningContentInput = document.getElementById('learning_content');
+      var searchButton = document.getElementById('search_button');
+      var errorMessage = document.getElementById('error_message');
+
+      function validateForm() {
+        if (searchTypeSelect.value === '' ||
+          (searchTypeSelect.value === 'learning_item' && learningItemSelect.value === '') ||
+          (searchTypeSelect.value === 'learning_content' && learningContentInput.value === '')
+        ) {
+          errorMessage.style.display = "block";
+          searchButton.disabled = true;
+        } else {
+          errorMessage.style.display = "none";
+          searchButton.disabled = false;
+        }
+      }
 
       form.addEventListener('submit', function(event) {
-        if (searchTypeSelect.value === '' || (searchTypeSelect.value === 'learning_item' && document.querySelector('#learning_item').value === '') || (searchTypeSelect.value === 'learning_content' && document.querySelector('#learning_content').value === '')) {
+        if (!searchButton.disabled) {
+          // 送信可能
+        } else {
           event.preventDefault(); // ページ遷移をキャンセル
-          alert('検索項目を選択し、内容を入力してください。');
         }
       });
 
       searchTypeSelect.addEventListener("change", function() {
         if (this.value === "learning_item") {
-          learningItemSearch.style.display = "block";
-          learningContentSearch.style.display = "none";
+          document.getElementById('learning_item_search').style.display = "block";
+          document.getElementById('learning_content_search').style.display = "none";
         } else if (this.value === "learning_content") {
-          learningItemSearch.style.display = "none";
-          learningContentSearch.style.display = "block";
+          document.getElementById('learning_item_search').style.display = "none";
+          document.getElementById('learning_content_search').style.display = "block";
         } else {
-          learningItemSearch.style.display = "none";
-          learningContentSearch.style.display = "none";
+          document.getElementById('learning_item_search').style.display = "none";
+          document.getElementById('learning_content_search').style.display = "none";
         }
+        validateForm();
       });
+
+      learningItemSelect.addEventListener("input", validateForm);
+      learningContentInput.addEventListener("input", validateForm);
     });
   </script>
 <% end %>

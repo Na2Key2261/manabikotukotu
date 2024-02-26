@@ -14,7 +14,7 @@
               <div class="col-md-6">
                 <div class="card mt-2">
                   <div class="card-body">
-                    <h5 class="card-title">今日の記録</h5>
+                    <h5 class="card-title">今日の学習時間</h5>
                     <p class="card-text"><%= @total_today_learning_hours %> 時間</p>
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#todayList" aria-expanded="false" aria-controls="todayList">
                       記録を表示
@@ -32,7 +32,7 @@
               <div class="col-md-6">
                 <div class="card mt-2 mb-4">
                   <div class="card-body">
-                    <h5 class="card-title">きのうの記録</h5>
+                    <h5 class="card-title">きのうの学習時間</h5>
                     <p class="card-text"><%= @total_yesterday_learning_hours %> 時間</p>
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#yesterdayList" aria-expanded="false" aria-controls="yesterdayList">
                       記録を表示
@@ -93,7 +93,7 @@
     <div id="error-learning-content" class="error"></div>
   </div>
   <div class="actions">
-    <%= form.submit '投稿', class: 'btn btn-primary', id: 'submit-button' %>
+    <%= form.submit '投稿', class: 'btn btn-primary', id: 'submit-button', disabled: true %>
   </div>
 <% end %>
               </div>
@@ -164,7 +164,7 @@
         </div>
 
         <!-- 学習項目別の学習時間の合計の表示 -->
-        <div class="col-md-12 mt-4">
+        <div class="col-md-12 mt-4 mb-4">
           <% if @learning_items_total.present? %>
             <h4 class="top_text">学習項目別の学習時間の合計</h4>
             <ul class="list-group">
@@ -177,7 +177,6 @@
 
         <!-- 学習項目別の学習時間の合計のグラフ -->
         <% if @learning_items_total.present? %>
-          <h4 class="top_text text-center mt-4">学習項目別の学習時間の合計</h4>
           <div id="chart_div"></div>
         <% end %>
       </div>
@@ -225,42 +224,31 @@ function drawCharts() {
   <% end %>
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('post-form').addEventListener('submit', function(event) {
-      var learningItem = document.querySelector('#post_learning_item').value;
-      var learningHour = document.querySelector('#post_learning_hour').value;
-      var learningContent = document.querySelector('#post_learning_content').value;
-      var errorMessages = document.getElementById('error-messages');
-      var errorLearningItem = document.getElementById('error-learning-item');
-      var errorLearningHour = document.getElementById('error-learning-hour');
-      var errorLearningContent = document.getElementById('error-learning-content');
+document.addEventListener("DOMContentLoaded", function() {
+    var form = document.getElementById('post-form');
+    var submitButton = document.getElementById('submit-button');
 
-      errorMessages.innerHTML = '';
-      errorLearningItem.innerHTML = '';
-      errorLearningHour.innerHTML = '';
-      errorLearningContent.innerHTML = '';
+    function validateForm() {
+      var learningItem = document.getElementById('post_learning_item');
+      var learningHour = document.getElementById('post_learning_hour');
+      var learningContent = document.getElementById('post_learning_content');
 
-      var hasError = false;
-
-      if (learningItem === '' || learningItem === null) {
-        errorLearningItem.innerHTML = '学習項目を選択してください';
-        hasError = true;
+      if (learningItem.value === '' || learningHour.value === '' || learningContent.value === '') {
+        submitButton.disabled = true;
+      } else {
+        submitButton.disabled = false;
       }
+    }
 
-      if (learningHour === '' || learningHour === null) {
-        errorLearningHour.innerHTML = '学習時間を入力してください';
-        hasError = true;
-      }
-
-      if (learningContent === '' || learningContent === null) {
-        errorLearningContent.innerHTML = '学習内容を入力してください';
-        hasError = true;
-      }
-
-      if (hasError) {
-        event.preventDefault();
+    form.addEventListener('submit', function(event) {
+      if (submitButton.disabled) {
+        event.preventDefault(); // ページ遷移をキャンセル
+        document.getElementById('error-messages').innerText = '全ての項目を入力してください。';
       }
     });
+
+    form.addEventListener('input', validateForm);
+    validateForm(); // ページ読み込み時にも実行して初期状態を設定する
   });
 </script>
 
