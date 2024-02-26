@@ -8,44 +8,47 @@
         <!-- 学習内容の投稿フォーム -->
         <div>
         <div class="text-center mt-4">
+          
             <h3 class="top_text">学習時間の合計: <%= @total_learning_hours %> 時間</h3>
             <div class="row mb-4">
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">今日の記録</h5>
-                    <p class="card-text"><%= @total_today_learning_hours %> 時間</p>
-                    <% if @learning_items_today.present? %>
-            
-                      <ul class="list-group list-group-flush">
-                        <% @learning_items_today.each do |learning_item, total_hours| %>
-                          <li class="list-group-item"><i class="fa-solid fa-book-open"></i> <%= learning_item %>: <%= total_hours %> 時間</li>
-                        <% end %>
-                      </ul>
-                    <% else %>
-                      <p class="card-text"></p>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
-                <div class="col-md-6">
-                  <div class="card mb-4">
-                    <div class="card-body">
-                      <h5 class="card-title">きのうの記録</h5>
-                      <p class="card-text"><%= @total_yesterday_learning_hours %> 時間</p>
-                      <% if @learning_items_yesterday.present? %>
-                        <ul class="list-group list-group-flush">
-                        <% @learning_items_yesterday.each do |learning_item, total_hours| %>
-                          <li class="list-group-item"><i class="fa-solid fa-book-open"></i> <%= learning_item %>: <%= total_hours %> 時間</li>
-                        <% end %>
-                      </ul>
-                    <% else %>
-                      
-                    <% end %>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <div class="col-md-6">
+    <div class="card mt-2">
+      <div class="card-body">
+        <h5 class="card-title">今日の記録</h5>
+        <p class="card-text"><%= @total_today_learning_hours %> 時間</p>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#todayList" aria-expanded="false" aria-controls="todayList">
+          記録を表示
+        </button>
+        <div class="collapse" id="todayList">
+          <ul class="list-group list-group-flush">
+            <% @learning_items_today.each do |learning_item, total_hours| %>
+              <li class="list-group-item"><i class="fa-solid fa-book-open"></i> <%= learning_item %>: <%= total_hours %> 時間</li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card mt-2 mb-4">
+      <div class="card-body">
+        <h5 class="card-title">きのうの記録</h5>
+        <p class="card-text"><%= @total_yesterday_learning_hours %> 時間</p>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#yesterdayList" aria-expanded="false" aria-controls="yesterdayList">
+          記録を表示
+        </button>
+        <div class="collapse" id="yesterdayList">
+          <ul class="list-group list-group-flush">
+            <% @learning_items_yesterday.each do |learning_item, total_hours| %>
+              <li class="list-group-item"><i class="fa-solid fa-book-open"></i> <%= learning_item %>: <%= total_hours %> 時間</li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
             <a href="#user_records" class="learn-record-link　mt-4">あなたの学習記録</a>
             <div id="weekly-learning-chart" class="mt-2"></div>
             <div class="text-center mt-2">
@@ -71,23 +74,28 @@
                 </button>
               </div>
               <div class="modal-body">
-                <%= form_with(model: [@user, @post], url: public_user_posts_path(@user), method: :post, local: true) do |form| %>
-                  <div class="form-group">
-                    <%= form.label :learning_item, '学習項目' %>
-                    <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください', class: 'form-control' %>
-                  </div>
-                  <div class="form-group">
-                    <%= form.label :learning_hour, '学習時間' %>
-                    <%= form.number_field :learning_hour, min: 1, max: 24, class: 'form-control' %>
-                  </div>
-                  <div class="form-group">
-                    <%= form.label :learning_content, '学習内容' %>
-                    <%= form.text_area :learning_content, class: 'form-control' %>
-                  </div>
-                  <div class="actions">
-                    <%= form.submit '投稿', class: 'btn btn-primary' %>
-                  </div>
-                <% end %>
+                <%= form_with(model: [@user, @post], url: public_user_posts_path(@user), method: :post, local: true, html: { id: 'post-form' }) do |form| %>
+  <div id="error-messages"></div>
+
+  <div class="form-group">
+    <%= form.label :learning_item, '学習項目' %>
+    <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください', class: 'form-control' %>
+    <div id="error-learning-item" class="error"></div>
+  </div>
+  <div class="form-group">
+    <%= form.label :learning_hour, '学習時間' %>
+    <%= form.number_field :learning_hour, min: 1, max: 24, class: 'form-control' %>
+    <div id="error-learning-hour" class="error"></div>
+  </div>
+  <div class="form-group">
+    <%= form.label :learning_content, '学習内容' %>
+    <%= form.text_area :learning_content, class: 'form-control' %>
+    <div id="error-learning-content" class="error"></div>
+  </div>
+  <div class="actions">
+    <%= form.submit '投稿', class: 'btn btn-primary', id: 'submit-button' %>
+  </div>
+<% end %>
               </div>
             </div>
           </div>
@@ -216,6 +224,44 @@ function drawCharts() {
     chart.draw(chartData, options);
   <% end %>
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('post-form').addEventListener('submit', function(event) {
+      var learningItem = document.querySelector('#post_learning_item').value;
+      var learningHour = document.querySelector('#post_learning_hour').value;
+      var learningContent = document.querySelector('#post_learning_content').value;
+      var errorMessages = document.getElementById('error-messages');
+      var errorLearningItem = document.getElementById('error-learning-item');
+      var errorLearningHour = document.getElementById('error-learning-hour');
+      var errorLearningContent = document.getElementById('error-learning-content');
+
+      errorMessages.innerHTML = '';
+      errorLearningItem.innerHTML = '';
+      errorLearningHour.innerHTML = '';
+      errorLearningContent.innerHTML = '';
+
+      var hasError = false;
+
+      if (learningItem === '' || learningItem === null) {
+        errorLearningItem.innerHTML = '学習項目を選択してください';
+        hasError = true;
+      }
+
+      if (learningHour === '' || learningHour === null) {
+        errorLearningHour.innerHTML = '学習時間を入力してください';
+        hasError = true;
+      }
+
+      if (learningContent === '' || learningContent === null) {
+        errorLearningContent.innerHTML = '学習内容を入力してください';
+        hasError = true;
+      }
+
+      if (hasError) {
+        event.preventDefault();
+      }
+    });
+  });
 </script>
 
 

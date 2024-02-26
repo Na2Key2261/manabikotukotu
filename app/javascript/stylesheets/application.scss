@@ -93,6 +93,10 @@ body {
   max-width: 100%; /* 親要素の幅を超えないようにする */
 }
 
+.error {
+    color: red;
+  }
+
 .btn-fukidashi-icon {
     position: relative;
     padding: 1rem 1rem 1rem 4rem;
@@ -247,4 +251,11 @@ footer{
 .list-group-item {
   background-color: #E0FFFF; /* 水色 */
   border-color: #E0FFFF; /* 枠線の色も同じにする */
+}
+
+@media (max-width: 1000px) {
+  .sidebar.position-fixed {
+    position: static !important;
+    width: 100%;
+  }
 }

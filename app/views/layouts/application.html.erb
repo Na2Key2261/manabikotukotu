@@ -1,97 +1,98 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title class="top_text">まなびコツコツ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <script src="https://kit.fontawesome.com/d02e795f7e.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-
 </head>
-
 <body>
 <header class="navbar-light bg-lime">
-  <nav class="navbar navbar-expand-lg navbar-light bg-lime">
-    <div class="container">
-      <% if guest_signed_in? %>
-        <a class="tytle_icon navbar-brand" href="<%= public_posts_path %>"><span>まなびコツコツ</span></a>
-      <% else %>
-        <% if user_signed_in? %>
-          <a class="tytle_icon navbar-brand" href="<%= mypage_path %>"><span>まなびコツコツ</span></a>
-        <% else %>
-          <a class="tytle_icon navbar-brand" href="/"><span>まなびコツコツ</span></a>
-        <% end %>
-      <% end %>
+    <nav class="navbar navbar-expand-lg navbar-light bg-lime">
+        <div class="container">
+            <% if guest_signed_in? %>
+                <a class="tytle_icon navbar-brand" href="<%= public_posts_path %>"><span>まなびコツコツ</span></a>
+            <% else %>
+                <% if user_signed_in? %>
+                    <a class="tytle_icon navbar-brand" href="<%= mypage_path %>"><span>まなびコツコツ</span></a>
+                <% else %>
+                    <a class="tytle_icon navbar-brand" href="/"><span>まなびコツコツ</span></a>
+                <% end %>
+            <% end %>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <% if guest_signed_in? %>
-            <li class="nav-item">
-              <%= link_to 'みんなの投稿', public_posts_path, class: "nav-link fa-solid fa-users" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトします?' }, class: "nav-link fa-solid fa-sign-out-alt" %>
-            </li>
-          <% elsif user_signed_in? %>
-            <li class="nav-item">
-              <%= link_to 'マイページ', mypage_path, class: "nav-link fa-solid fa-house-user" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'みんなの投稿', public_posts_path, class: "nav-link fa-solid fa-users" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか?' }, class: "nav-link fa-solid fa-sign-out-alt" %>
-            </li>
-            <% elsif admin_signed_in? %>
-            <li class="nav-item">
-              <%= link_to 'ユーザー管理', admin_users_path, class: "nav-link fa-solid fa-users" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to '投稿管理', admin_posts_path, class: "nav-link fa-solid fa-comment-dots" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, data: { confirm: 'ログアウトします?' }, class: "nav-link fa-solid fa-sign-out-alt" %>
-            </li>
-          <% else %>
-            <li class="nav-item">
-              <%= link_to '新規登録', new_user_registration_path, class: "nav-link fa-solid fa-user-plus" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'ログイン', new_user_session_path, class: "nav-link fa-solid fa-sign-in-alt" %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-  </nav>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <% if guest_signed_in? %>
+                        <li class="nav-item">
+                            <%= link_to 'みんなの投稿', public_posts_path, class: "nav-link fa-solid fa-users" %>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトします?' }, class: "nav-link fa-solid fa-sign-out-alt" %>
+                        </li>
+                    <% elsif user_signed_in? %>
+                        <li class="nav-item">
+                            <%= link_to 'マイページ', mypage_path, class: "nav-link fa-solid fa-house-user" %>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to 'みんなの投稿', public_posts_path, class: "nav-link fa-solid fa-users" %>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか?' }, class: "nav-link fa-solid fa-sign-out-alt" %>
+                        </li>
+                    <% elsif admin_signed_in? %>
+                        <li class="nav-item">
+                            <%= link_to 'ユーザー管理', admin_users_path, class: "nav-link fa-solid fa-users" %>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to '投稿管理', admin_posts_path, class: "nav-link fa-solid fa-comment-dots" %>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, data: { confirm: 'ログアウトします?' }, class: "nav-link fa-solid fa-sign-out-alt" %>
+                        </li>
+                    <% else %>
+                        <li class="nav-item">
+                            <%= link_to '新規登録', new_user_registration_path, class: "nav-link fa-solid fa-user-plus" %>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to 'ログイン', new_user_session_path, class: "nav-link fa-solid fa-sign-in-alt" %>
+                        </li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </header>
 
 <%= yield %>
 <footer class="mt-4">
-  <a href="#" id="back-to-top" class="btn btn-outline-dark btn-floating btn-lg"><i class="fa-solid fa-circle-up"></i></a>
+    <a href="#" id="back-to-top" class="btn btn-outline-dark btn-floating btn-lg"><i class="fa-solid fa-circle-up"></i></a>
 </footer>
 
 </body>
 </html>
 <script>
-  $(document).ready(function() {
-    $(window).scroll(function() {
-      if ($(this).scrollTop() > 100) {
-        $('#back-to-top').fadeIn();
-      } else {
-        $('#back-to-top').fadeOut();
-      }
-    });
+    $(document).ready(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 100) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
 
-    $('#back-to-top').click(function() {
-      $('body,html').animate({
-        scrollTop: 0
-      }, 400);
-      return false;
+        $('#back-to-top').click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 400);
+            return false;
+        });
     });
-  });
 </script>

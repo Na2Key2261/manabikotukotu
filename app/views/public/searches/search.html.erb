@@ -4,7 +4,7 @@
       <%= render "public/users/sidebar" %>
     </div>
     <div class="col-md-9">
-      <h2 class="text-center mt-4">あなたのいいね一覧</h2>
+      <h2 class="top_text text-center mt-4">検索結果</h2>
       <% @posts.each do |post| %>
         <div class="card mb-3">
           <div class="card-header">
@@ -40,7 +40,10 @@
           </div>
         </div>
       <% end %>
-      <%= link_to "戻る", mypage_path, class: "btn btn-primary" %>
-    </div>
+      <% if guest_signed_in? %>
+  <%= link_to "戻る", public_posts_path, class: "btn btn-primary" %>
+<% else %>
+  <%= link_to "戻る", mypage_path, class: "btn btn-primary" %>
+<% end %>
   </div>
 </div>

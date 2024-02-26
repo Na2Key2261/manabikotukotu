@@ -1,6 +1,7 @@
-<div class="sidebar mt-4 text-center">
+<div class="sidebar mt-4 text-center position-fixed bg-white">
   <% if user_signed_in? %>
     <div class="user-avatar">
+      <h4 class="top_text mt-4">学習時間の合計: <%= @total_learning_hours %>時間!</h4>
         <% if current_user.image.attached? %>
           <%= image_tag current_user.image, size: "100x100" %>
         <% else %>
@@ -9,14 +10,17 @@
       </div>
       <h2 class="user-name"><%= current_user.name %></h2>
     <% unless current_user.guest? %>
+      <div class="text-center mt-4 mb-4">
+          <button type="button" class="btn btn-fukidashi-icon" data-toggle="modal" data-target="#learningModal">
+            <i class="fas fa-edit fa-fw"></i><span>まなびを投稿する！</span>
+          </button>
+        </div>
       <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn-edit btn-light mt-2" %><br>
       <%= link_to "あなたの<i class='fa-regular fa-thumbs-up'></i>一覧 ".html_safe, public_favorites_index_path, class: "btn btn-info mt-2" %>
     <% end %>
   <% else %>
   <% end %>
-  <div class="mt-2">
+  <div class="mt-2 mb-4">
     <%= render "public/searches/form" %>
   </div>
 </div>
-
-

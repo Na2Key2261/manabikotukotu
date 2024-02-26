@@ -4,6 +4,19 @@
       <h2 class="card-title">ログイン</h2>
 
       <%= form_with model: @user, url: session_path(resource_name), local: true do |f| %>
+      
+        <% if @user.errors.any? %>
+        
+          <div class="alert alert-danger">
+            <h4><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h4>
+            <ul>
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
         <div class="form-group">
           <%= f.label :email %><br />
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
@@ -35,3 +48,4 @@
     </div>
   </div>
 </div>
+
