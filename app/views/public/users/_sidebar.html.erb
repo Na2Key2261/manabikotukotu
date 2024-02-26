@@ -10,11 +10,7 @@
       </div>
       <h2 class="user-name"><%= current_user.name %></h2>
     <% unless current_user.guest? %>
-      <div class="text-center mt-4 mb-4">
-          <button type="button" class="btn btn-fukidashi-icon" data-toggle="modal" data-target="#learningModal">
-            <i class="fas fa-edit fa-fw"></i><span>まなびを投稿する！</span>
-          </button>
-        </div>
+      <div class="text-center mt-4 mb-4"></div>
       <%= link_to "会員情報の編集", edit_public_user_path(current_user), class: "btn-edit btn-light mt-2" %><br>
       <%= link_to "あなたの<i class='fa-regular fa-thumbs-up'></i>一覧 ".html_safe, public_favorites_index_path, class: "btn btn-info mt-2" %>
     <% end %>
