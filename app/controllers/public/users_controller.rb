@@ -33,8 +33,8 @@ class Public::UsersController < ApplicationController
     @learning_items_total = @user.posts.group(:learning_item).sum(:learning_hour)
   
     # 過去一週間の学習時間
-    start_date = Date.today.beginning_of_week(:sunday) - 6.days
-    end_date = Date.today.end_of_week(:sunday)
+    start_date = Date.today - 6.days
+    end_date = Date.today + 1.days
     weekly_learning_hours = @user.posts.where(created_at: start_date..end_date).group("DATE(created_at)").sum(:learning_hour)
   
     @weekly_learning_hours = []
