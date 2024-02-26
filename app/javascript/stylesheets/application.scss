@@ -252,10 +252,3 @@ footer{
   background-color: #E0FFFF; /* 水色 */
   border-color: #E0FFFF; /* 枠線の色も同じにする */
 }
-
-@media (max-width: 1000px) {
-  .sidebar.position-fixed {
-    position: static !important;
-    width: 100%;
-  }
-}

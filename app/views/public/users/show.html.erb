@@ -11,43 +11,43 @@
           
             <h3 class="top_text">学習時間の合計: <%= @total_learning_hours %> 時間</h3>
             <div class="row mb-4">
-  <div class="col-md-6">
-    <div class="card mt-2">
-      <div class="card-body">
-        <h5 class="card-title">今日の記録</h5>
-        <p class="card-text"><%= @total_today_learning_hours %> 時間</p>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#todayList" aria-expanded="false" aria-controls="todayList">
-          記録を表示
-        </button>
-        <div class="collapse" id="todayList">
-          <ul class="list-group list-group-flush">
-            <% @learning_items_today.each do |learning_item, total_hours| %>
-              <li class="list-group-item"><i class="fa-solid fa-book-open"></i> <%= learning_item %>: <%= total_hours %> 時間</li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="card mt-2 mb-4">
-      <div class="card-body">
-        <h5 class="card-title">きのうの記録</h5>
-        <p class="card-text"><%= @total_yesterday_learning_hours %> 時間</p>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#yesterdayList" aria-expanded="false" aria-controls="yesterdayList">
-          記録を表示
-        </button>
-        <div class="collapse" id="yesterdayList">
-          <ul class="list-group list-group-flush">
-            <% @learning_items_yesterday.each do |learning_item, total_hours| %>
-              <li class="list-group-item"><i class="fa-solid fa-book-open"></i> <%= learning_item %>: <%= total_hours %> 時間</li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+              <div class="col-md-6">
+                <div class="card mt-2">
+                  <div class="card-body">
+                    <h5 class="card-title">今日の記録</h5>
+                    <p class="card-text"><%= @total_today_learning_hours %> 時間</p>
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#todayList" aria-expanded="false" aria-controls="todayList">
+                      記録を表示
+                    </button>
+                    <div class="collapse" id="todayList">
+                      <ul class="list-group list-group-flush">
+                        <% @learning_items_today.each do |learning_item, total_hours| %>
+                          <li class="list-group-item"><i class="fa-solid fa-book-open"></i> <%= learning_item %>: <%= total_hours %> 時間</li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card mt-2 mb-4">
+                  <div class="card-body">
+                    <h5 class="card-title">きのうの記録</h5>
+                    <p class="card-text"><%= @total_yesterday_learning_hours %> 時間</p>
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#yesterdayList" aria-expanded="false" aria-controls="yesterdayList">
+                      記録を表示
+                    </button>
+                    <div class="collapse" id="yesterdayList">
+                      <ul class="list-group list-group-flush">
+                        <% @learning_items_yesterday.each do |learning_item, total_hours| %>
+                          <li class="list-group-item"><i class="fa-solid fa-book-open"></i> <%= learning_item %>: <%= total_hours %> 時間</li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <a href="#user_records" class="learn-record-link　mt-4">あなたの学習記録</a>
             <div id="weekly-learning-chart" class="mt-2"></div>
