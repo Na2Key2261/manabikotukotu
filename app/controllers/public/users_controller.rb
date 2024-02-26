@@ -46,10 +46,10 @@ end
 # 過去一週間の学習時間の合計
 @total_weekly_hours = @weekly_learning_hours.sum { |data| data[:hours] }
 
-  @chart_data = [['学習項目', '学習時間']]
-  @learning_items_total.each do |learning_item, total_hours|
-    @chart_data << [learning_item, total_hours]
-  end
+@chart_data = [['学習項目', '学習時間']]
+@learning_items_total.each do |learning_item, total_hours|
+  @chart_data << [learning_item, total_hours]
+end
   end
 
 
