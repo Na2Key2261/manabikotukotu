@@ -35,9 +35,8 @@ class Public::UsersController < ApplicationController
     # 過去一週間の学習時間
     start_date = Date.today - 6.days
     end_date = Date.today + 1.days
+    # weekly_learning_hours = @user.posts.where(created_at: start_date..end_date).group("DATE(created_at)").sum(:learning_hour)
     weekly_learning_hours = @user.posts.where(created_at: start_date..end_date).group("DATE_FORMAT(created_at, '%Y-%m-%d')").sum(:learning_hour)
-
-    
     @weekly_learning_hours = []
     (start_date..Date.today).reverse_each do |date|
     formatted_date = date.strftime("%Y-%m-%d")
@@ -53,7 +52,6 @@ class Public::UsersController < ApplicationController
       @chart_data << [learning_item, total_hours]
     end
   end
-
 
   def edit
   @user = User.find(params[:id])
