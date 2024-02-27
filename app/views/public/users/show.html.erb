@@ -8,8 +8,6 @@
         <!-- 学習内容の投稿フォーム -->
         <div>
         <div class="text-center mt-4">
-<%= @hours_s %><br>
-
             <h3 class="top_text">学習時間の合計: <%= @total_learning_hours %> 時間</h3>
             <div class="row mb-4">
               <div class="col-md-6">
@@ -57,7 +55,7 @@
               <h6>合格目指して毎日コツコツと！<i class="fa-solid fa-horse mt-4"></i></h6>
             </div>
           </div>
-        </div
+        </div>
           <!-- モーダルのトリガーボタン -->
         <div class="text-center">
           <button type="button" class="btn btn-fukidashi-icon" data-toggle="modal" data-target="#learningModal">
@@ -77,27 +75,27 @@
               </div>
               <div class="modal-body">
                 <%= form_with(model: [@user, @post], url: public_user_posts_path(@user), method: :post, local: true, html: { id: 'post-form' }) do |form| %>
-  <div id="error-messages"></div>
-
-  <div class="form-group">
-    <%= form.label :learning_item, '学習項目' %>
-    <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください', class: 'form-control' %>
-    <div id="error-learning-item" class="error"></div>
-  </div>
-  <div class="form-group">
-    <%= form.label :learning_hour, '学習時間' %>
-    <%= form.number_field :learning_hour, min: 1, max: 24, class: 'form-control' %>
-    <div id="error-learning-hour" class="error"></div>
-  </div>
-  <div class="form-group">
-    <%= form.label :learning_content, '学習内容' %>
-    <%= form.text_area :learning_content, class: 'form-control' %>
-    <div id="error-learning-content" class="error"></div>
-  </div>
-  <div class="actions">
-    <%= form.submit '投稿', class: 'btn btn-primary', id: 'submit-button', disabled: true %>
-  </div>
-<% end %>
+                <div id="error-messages"></div>
+              
+                <div class="form-group">
+                  <%= form.label :learning_item, '学習項目' %>
+                  <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください', class: 'form-control' %>
+                  <div id="error-learning-item" class="error"></div>
+                </div>
+                <div class="form-group">
+                  <%= form.label :learning_hour, '学習時間' %>
+                  <%= form.number_field :learning_hour, min: 1, max: 24, class: 'form-control' %>
+                  <div id="error-learning-hour" class="error"></div>
+                </div>
+                <div class="form-group">
+                  <%= form.label :learning_content, '学習内容' %>
+                  <%= form.text_area :learning_content, class: 'form-control' %>
+                  <div id="error-learning-content" class="error"></div>
+                </div>
+                <div class="actions">
+                  <%= form.submit '投稿', class: 'btn btn-primary', id: 'submit-button', disabled: true %>
+                </div>
+              <% end %>
               </div>
             </div>
           </div>

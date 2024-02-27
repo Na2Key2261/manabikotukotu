@@ -40,6 +40,13 @@ Rails.application.routes.draw do
       resources :post_comments, only: [:create, :destroy]
       resources :events, only: [:index]
   end
+    resources :users, only: [:index] do
+      member do
+        post 'follow', to: 'relationships#create'
+        delete 'unfollow', to: 'relationships#destroy'
+      end
+    end
+  
   get 'favorites/index', to: 'favorites#index'
   
   end
