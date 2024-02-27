@@ -40,7 +40,7 @@ class Public::UsersController < ApplicationController
     @weekly_learning_hours = []
     (start_date..Date.today).reverse_each do |date|
     formatted_date = date.strftime("%Y-%m-%d")
-    
+    logger.debug "Weekly Learning Hours: #{weekly_learning_hours.inspect}"
     @weekly_learning_hours << { date: formatted_date, hours: weekly_learning_hours[formatted_date] || 0 } 
     # if @weekly_learning_hours.length < 7 && weekly_learning_hours[formatted_date]
     end
