@@ -75,27 +75,27 @@
               </div>
               <div class="modal-body">
                 <%= form_with(model: [@user, @post], url: public_user_posts_path(@user), method: :post, local: true, html: { id: 'post-form' }) do |form| %>
-                <div id="error-messages"></div>
-              
-                <div class="form-group">
-                  <%= form.label :learning_item, '学習項目' %>
-                  <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください', class: 'form-control' %>
-                  <div id="error-learning-item" class="error"></div>
-                </div>
-                <div class="form-group">
-                  <%= form.label :learning_hour, '学習時間' %>
-                  <%= form.number_field :learning_hour, min: 1, max: 24, class: 'form-control' %>
-                  <div id="error-learning-hour" class="error"></div>
-                </div>
-                <div class="form-group">
-                  <%= form.label :learning_content, '学習内容' %>
-                  <%= form.text_area :learning_content, class: 'form-control' %>
-                  <div id="error-learning-content" class="error"></div>
-                </div>
-                <div class="actions">
-                  <%= form.submit '投稿', class: 'btn btn-primary', id: 'submit-button', disabled: true %>
-                </div>
-              <% end %>
+              <div id="error-messages"></div>
+            
+              <div class="form-group">
+                <%= form.label :learning_item, '学習項目' %>
+                <%= form.select :learning_item, Post.learning_items.keys, prompt: '選択してください', class: 'form-control' %>
+                <div id="error-learning-item" class="error"></div>
+              </div>
+              <div class="form-group">
+                <%= form.label :learning_hour, '学習時間' %>
+                <%= form.number_field :learning_hour, min: 1, max: 24, class: 'form-control' %>
+                <div id="error-learning-hour" class="error"></div>
+              </div>
+              <div class="form-group">
+                <%= form.label :learning_content, '学習内容' %>
+                <%= form.text_area :learning_content, class: 'form-control' %>
+                <div id="error-learning-content" class="error"></div>
+              </div>
+              <div class="actions">
+                <%= form.submit '投稿', class: 'btn btn-primary', id: 'submit-button', disabled: true %>
+              </div>
+            <% end %>
               </div>
             </div>
           </div>

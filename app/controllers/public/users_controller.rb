@@ -36,9 +36,9 @@ class Public::UsersController < ApplicationController
     start_date = Date.today - 6.days
     end_date = Date.today + 1.days
     #本番環境では↓をコメントアウト
-    # weekly_learning_hours = @user.posts.where(created_at: start_date..end_date).group("DATE(created_at)").sum(:learning_hour)
+    weekly_learning_hours = @user.posts.where(created_at: start_date..end_date).group("DATE(created_at)").sum(:learning_hour)
     #開発環境では↓をコメントアウト
-    weekly_learning_hours = @user.posts.where(created_at: start_date..end_date).group("DATE_FORMAT(created_at, '%Y-%m-%d')").sum(:learning_hour)
+    # weekly_learning_hours = @user.posts.where(created_at: start_date..end_date).group("DATE_FORMAT(created_at, '%Y-%m-%d')").sum(:learning_hour)
     @weekly_learning_hours = []
     (start_date..Date.today).reverse_each do |date|
     formatted_date = date.strftime("%Y-%m-%d")
@@ -70,8 +70,12 @@ class Public::UsersController < ApplicationController
     end
   end
   
+  def destroy
+    @user = current_user
+    @user.destroy
+    redirect_to root_path, notice: '退会しました。'
+  end
   
-
   private
 
   def user_params

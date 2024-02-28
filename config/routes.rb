@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   namespace :public do
     get 'registrations/new' => 'registrations#new', as: 'new_user_registration'
     get '/search', to: 'searches#search', as: 'search'
-    resources :users, only: [:show, :edit, :update, :index] do
+    resources :users, only: [:show, :edit, :update, :index, :destroy] do
       resources :posts, only: [:new, :create, :edit, :update] # ネスト
     end
     resources :posts, only: [:new, :create, :edit, :update, :index, :show, :destroy] do
@@ -40,12 +40,6 @@ Rails.application.routes.draw do
       resources :post_comments, only: [:create, :destroy]
       resources :events, only: [:index]
   end
-    resources :users, only: [:index] do
-      member do
-        post 'follow', to: 'relationships#create'
-        delete 'unfollow', to: 'relationships#destroy'
-      end
-    end
   
   get 'favorites/index', to: 'favorites#index'
   

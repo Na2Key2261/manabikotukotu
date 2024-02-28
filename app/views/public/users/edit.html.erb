@@ -37,6 +37,7 @@
             <%= form.submit '更新', class: 'btn bg-lime mr-2', id: 'update-button', disabled: true %>
             <%= link_to '戻る', public_user_path(@user), class: 'btn btn-secondary' %>
           </div>
+          <%= link_to '退会する', public_user_path(@user), method: :delete, data: { confirm: '本当に退会しますか？再度ログインする際は新規登録をしてください' }, class: 'btn btn-danger' %>
         <% end %>
       </div>
     </div>
