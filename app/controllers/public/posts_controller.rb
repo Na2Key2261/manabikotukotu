@@ -34,7 +34,7 @@ class Public::PostsController < ApplicationController
   end
 
   def edit
-  @post = Post.find(params[:id])
+    @post = Post.find(params[:id])
   end
 
   def update
@@ -58,10 +58,10 @@ class Public::PostsController < ApplicationController
   end
   
   def check_guest_user
-  if current_user.email == "guest@example.com"
-    redirect_to root_path, alert: "ゲストユーザーはこの操作を行うことができません。"
+    if current_user.email == "guest@example.com"
+      redirect_to root_path, alert: "ゲストユーザーはこの操作を行うことができません。"
+    end
   end
-end
 
   private
 

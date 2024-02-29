@@ -50,10 +50,9 @@
           <%= paginate @posts %>
         </div>
         <% if guest_signed_in? %>
-  
-<% else %>
-  <%= link_to "戻る", mypage_path, class: "btn btn-primary" %>
-<% end %>
+        <% else %>
+          <%= link_to "戻る", mypage_path, class: "btn btn-primary" %>
+        <% end %>
     </div>
     
   </div>
