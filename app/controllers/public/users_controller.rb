@@ -35,7 +35,7 @@ class Public::UsersController < ApplicationController
     # 過去一週間の学習時間
     start_date = Date.today - 6.days
     end_date = Date.today + 1.days
-    #本番環境では↓をコメントアウト
+    #本番環境では↓をコメントアウト(開発環境ではエラー発生)
     # weekly_learning_hours = @user.posts.where(created_at: start_date..end_date).group("DATE(created_at)").sum(:learning_hour)
     
     #開発環境では↓をコメントアウト
