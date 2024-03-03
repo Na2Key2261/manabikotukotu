@@ -3,7 +3,6 @@ class Public::PostsController < ApplicationController
   before_action :check_guest_user, only: [:new, :create, :edit, :update, :destroy]
   def new
     @post = current_user.posts.build
-
   end
 
   def index

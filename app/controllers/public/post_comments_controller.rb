@@ -15,7 +15,7 @@ class Public::PostCommentsController < ApplicationController
     else
       flash[:error] = "コメントの削除中にエラーが発生しました。"
     end
-    redirect_to public_user_path # Redirect to wherever you want
+    redirect_to public_user_path 
   end
   
   private

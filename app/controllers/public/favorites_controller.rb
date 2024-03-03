@@ -3,7 +3,7 @@ class Public::FavoritesController < ApplicationController
     @user = current_user
     @favorite_posts = @user.favorites.map(&:post).sort_by(&:created_at).reverse
   end
-  
+
   def create
     post = Post.find(params[:post_id])
     favorite = current_user.favorites.new(post_id: post.id)

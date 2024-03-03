@@ -11,7 +11,7 @@ class Public::UsersController < ApplicationController
     # 学習時間の合計
     @total_learning_hours = @user.posts.sum(:learning_hour)
   
-  # 日付を指定して学習時間の合計と学習項目を取得
+    # 日付を指定して学習時間の合計と学習項目を取得
     if params[:search_date].present?
       search_date = Date.parse(params[:search_date])
       posts_on_date = @user.posts.where(created_at: search_date.all_day)
@@ -37,6 +37,7 @@ class Public::UsersController < ApplicationController
     end_date = Date.today + 1.days
     #本番環境では↓をコメントアウト
     # weekly_learning_hours = @user.posts.where(created_at: start_date..end_date).group("DATE(created_at)").sum(:learning_hour)
+    
     #開発環境では↓をコメントアウト
     weekly_learning_hours = @user.posts.where(created_at: start_date..end_date).group("DATE_FORMAT(created_at, '%Y-%m-%d')").sum(:learning_hour)
     @weekly_learning_hours = []
